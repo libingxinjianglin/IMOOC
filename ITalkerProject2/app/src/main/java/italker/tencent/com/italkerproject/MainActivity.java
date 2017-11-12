@@ -3,7 +3,6 @@ package italker.tencent.com.italkerproject;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import italker.tencent.com.common.Comon;
 import italker.tencent.com.common.app.Activity;
@@ -19,6 +18,5 @@ public class MainActivity extends Activity {
     }
     protected void initData(){
         mLabelTest.setText("那我不爱你了");
-        Toast.makeText(this, "woainio", Toast.LENGTH_SHORT).show();
     }
 }
