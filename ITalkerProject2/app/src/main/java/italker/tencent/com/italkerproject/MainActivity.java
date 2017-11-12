@@ -17,6 +17,5 @@ public class MainActivity extends Activity {
         mLabelTest = (TextView)super.findViewById(R.id.txt_test);
     }
     protected void initData(){
-        mLabelTest.setText("我爱你哦");
     }
 }
