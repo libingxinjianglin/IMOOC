@@ -27,7 +27,6 @@ public abstract class Activity extends AppCompatActivity {
         }else{
             finish();
         }
-
     }
     protected void initWeiget(){
 

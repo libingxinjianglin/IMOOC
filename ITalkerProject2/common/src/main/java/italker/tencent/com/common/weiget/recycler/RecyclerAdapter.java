@@ -63,7 +63,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<MyViewH
         //得到具体的数据
         Data data = mList.get(position);
         //触发绑定
-        holder.onbind();
+        holder.Bind(data);
 
     }
 
@@ -176,12 +176,13 @@ abstract class MyViewHolder<Data> extends RecyclerView.ViewHolder{
      /**
       * 用于绑定数据的触发
       */
-     public void onBind(Data data){
+     public void Bind(Data data){
          this.mData = data;
-         onbind();
+         onBind();
      }
 
-     protected abstract void onbind();
+     protected abstract void onBind();
+
      public void updataData(Data data){
          mCallBack.updata(data,this);
     }
