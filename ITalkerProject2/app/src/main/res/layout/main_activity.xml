@@ -16,23 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <italker.tencent.com.common.weiget.PortraitView
+                android:id="@+id/ima_protrait"
                 android:layout_width="@dimen/len_40"
                 android:layout_height="@dimen/len_40"
                 android:layout_margin="@dimen/len_4"
+                android:scaleType="centerCrop"
                 android:src="@drawable/default_portrait"/>
            <TextView
+               android:id="@+id/txt_title"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:layout_gravity="center"
                android:gravity="center"
-               android:text="@string/app_name"/>
+               android:text="aaaaaa"
+               android:textColor="?attr/toolbarMenuIconColor"/>
             <ImageView
+                android:id="@+id/ima_search"
                 android:padding="10dp"
                 android:layout_width="@dimen/len_40"
                 android:layout_height="@dimen/len_40"
                 android:layout_margin="@dimen/len_4"
                 android:src="@drawable/ic_search"
-                android:layout_gravity="right|center_vertical"/>
+                android:scaleType="centerInside"
+                android:layout_gravity="right|center_vertical" />
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -44,6 +50,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <net.qiujuer.genius.ui.widget.FloatActionButton
+        android:id="@+id/activity_float_button"
         android:layout_width="@dimen/len_52"
         android:layout_height="@dimen/len_52"
         android:src="@drawable/ic_group_add"
