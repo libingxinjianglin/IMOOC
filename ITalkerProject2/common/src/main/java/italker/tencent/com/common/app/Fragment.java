@@ -20,6 +20,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
         if(mRoot == null) {
             int id = getLayoutId();
             View mView = inflater.inflate(id, container, false);
+            initWidget(mView);
             mRoot = mView;
         }else{
             if(mRoot.getParent()!= null){
@@ -48,7 +49,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
 
     }
 
-    protected void initWidget(){
+    protected void initWidget(View view){
 
     }
     protected boolean onBack(){
