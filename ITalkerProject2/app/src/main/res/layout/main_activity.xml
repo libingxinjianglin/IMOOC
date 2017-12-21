@@ -58,6 +58,7 @@
         app:layout_anchorGravity="end|bottom"
         android:layout_marginBottom="@dimen/len_64"
         android:layout_marginRight="@dimen/font_12"
+        android:tint="@color/white"
         android:padding="@dimen/len_20"/>
 
     <android.support.design.widget.BottomNavigationView
@@ -65,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/len_52"
         android:layout_gravity="bottom"
+        android:background="@color/white"
         app:menu="@menu/navigation_items"
         app:itemIconTint="@color/text_nav"
         app:itemTextColor="@color/text_nav" />
