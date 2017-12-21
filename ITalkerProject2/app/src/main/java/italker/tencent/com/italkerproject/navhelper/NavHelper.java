@@ -14,6 +14,7 @@ import android.util.SparseArray;
  * @author qiujuer Email:qiujuer@live.cn
  * @version 1.0.0
  */
+public class NavHelper<T> {
     // 所有的Tab集合
     private final SparseArray<Tab<T>> tabs = new SparseArray<>();
 
