@@ -5,5 +5,5 @@ package italker.tencent.com.common.weiget.recycler;
  */
 
 public interface RecyclerCallBack<Data> {
-     void updata(Data data,MyViewHolder<Data> ViewHolder);
+     void updata(Data data, RecyclerAdapter.ViewHolder holder);
 }

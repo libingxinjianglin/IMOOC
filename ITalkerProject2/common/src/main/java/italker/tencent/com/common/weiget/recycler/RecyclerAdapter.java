@@ -1,7 +1,8 @@
 package italker.tencent.com.common.weiget.recycler;
 
-import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,21 +10,34 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 /**
- * Created by Administrator on 2017/11/12 0012.
+ * @author qiujuer Email:qiujuer@live.cn
+ * @version 1.0.0
  */
+@SuppressWarnings({"unchecked", "unused"})
+public abstract class RecyclerAdapter<Data>
+        extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder<Data>>
+        implements View.OnClickListener, View.OnLongClickListener,
+        RecyclerCallBack<Data> {
+    private final List<Data> mDataList;
+    private AdapterListener<Data> mListener;
 
-public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<MyViewHolder<Data>> implements View.OnClickListener,View.OnLongClickListener,RecyclerCallBack{
-
-    protected Context context;
-    protected List<Data> mList = new ArrayList<Data>();
-    protected  AdapterListener mListener;
-
-    public RecyclerAdapter(List<Data> mList, Context context){
-        this.mList = mList;
-        this.context = context;
+    /**
+     * 构造函数模块
+     */
+    public RecyclerAdapter() {
+        this(null);
     }
+
+    public RecyclerAdapter(AdapterListener<Data> listener) {
+        this(new ArrayList<Data>(), listener);
+    }
+
+    public RecyclerAdapter(List<Data> dataList, AdapterListener<Data> listener) {
+        this.mDataList = dataList;
+        this.mListener = listener;
+    }
+
     /**
      * 复写默认的布局类型返回
      *
@@ -32,7 +46,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<MyViewH
      */
     @Override
     public int getItemViewType(int position) {
-        return getItemViewType(position, mList.get(position));
+        return getItemViewType(position, mDataList.get(position));
     }
 
     /**
@@ -42,102 +56,157 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<MyViewH
      * @param data     当前的数据
      * @return XML文件的ID，用于创建ViewHolder
      */
+    @LayoutRes
     protected abstract int getItemViewType(int position, Data data);
 
-
+    /**
+     * 创建一个ViewHolder
+     *
+     * @param parent   RecyclerView
+     * @param viewType 界面的类型,约定为XML布局的Id
+     * @return ViewHolder
+     */
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mRoot = View.inflate(context,viewType,null);
-        MyViewHolder<Data> mHolder = getViewHolder(mRoot,viewType);
-        mRoot.setOnClickListener(this);
-        mRoot.setOnLongClickListener(this);
-        mRoot.setTag(mHolder);
-        mHolder.mCallBack = this;
-        return mHolder;
+    public ViewHolder<Data> onCreateViewHolder(ViewGroup parent, int viewType) {
+        // 得到LayoutInflater用于把XML初始化为View
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        // 把XML id为viewType的文件初始化为一个root View
+        View root = inflater.inflate(viewType, parent, false);
+        // 通过子类必须实现的方法，得到一个ViewHolder
+        ViewHolder<Data> holder = onCreateViewHolder(root, viewType);
+
+
+        // 设置View的Tag为ViewHolder，进行双向绑定
+        root.setTag(holder);
+        root.setOnLongClickListener(this);
+        // 设置事件点击
+        root.setOnClickListener(this);
+
+        // 进行界面注解绑定
+        // 绑定callback
+        holder.callback = this;
+
+        return holder;
     }
 
-    protected abstract MyViewHolder<Data> getViewHolder(View mRoot, int viewType);
+    /**
+     * 得到一个新的ViewHolder
+     *
+     * @param root     根布局
+     * @param viewType 布局类型，其实就是XML的ID
+     * @return ViewHolder
+     */
+    protected abstract ViewHolder<Data> onCreateViewHolder(View root, int viewType);
 
+    /**
+     * 绑定数据到一个Holder上
+     *
+     * @param holder   ViewHolder
+     * @param position 坐标
+     */
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        //得到具体的数据
-        Data data = mList.get(position);
-        //触发绑定
-        holder.Bind(data);
-
+    public void onBindViewHolder(ViewHolder<Data> holder, int position) {
+        // 得到需要绑定的数据
+        Data data = mDataList.get(position);
+        // 触发Holder的绑定方法
+        holder.bind(data);
     }
 
+    /**
+     * 得到当前集合的数据量
+     */
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mDataList.size();
     }
 
     /**
-     * 添加了一条数据
-     * @param data
+     * 插入一条数据并通知插入
+     *
+     * @param data Data
      */
-    public void addData(Data data){
-        mList.add(data);
-        notifyItemInserted(mList.size() - 1);
+    public void add(Data data) {
+        mDataList.add(data);
+        notifyItemInserted(mDataList.size() - 1);
     }
+
     /**
-     * 添加了一堆数据
+     * 插入一堆数据，并通知这段集合更新
+     *
+     * @param dataList Data
      */
-    public void addData(Data...data){
-        if(data.length > 0 && data != null){
-            int start = data.length;
-            Collections.addAll(mList,data);
-            notifyItemRangeChanged(start,mList.size());
+    public void add(Data... dataList) {
+        if (dataList != null && dataList.length > 0) {
+            int startPos = mDataList.size();
+            Collections.addAll(mDataList, dataList);
+            notifyItemRangeInserted(startPos, dataList.length);
         }
     }
+
+    /**
+     * 插入一堆数据，并通知这段集合更新
+     *
+     * @param dataList Data
+     */
+    public void add(Collection<Data> dataList) {
+        if (dataList != null && dataList.size() > 0) {
+            int startPos = mDataList.size();
+            mDataList.addAll(dataList);
+            notifyItemRangeInserted(startPos, dataList.size());
+        }
+    }
+
     /**
      * 删除操作
      */
     public void clear() {
-        mList.clear();
+        mDataList.clear();
         notifyDataSetChanged();
     }
 
-    /**
-     * 添加一堆数据
-     */
-    public void addData(Collection<Data> data){
-        mList.addAll(data);
-        notifyDataSetChanged();
-    }
     /**
      * 替换为一个新的集合，其中包括了清空
      *
      * @param dataList 一个新的集合
      */
     public void replace(Collection<Data> dataList) {
-        mList.clear();
+        mDataList.clear();
         if (dataList == null || dataList.size() == 0)
             return;
-        mList.addAll(dataList);
+        mDataList.addAll(dataList);
         notifyDataSetChanged();
     }
 
     @Override
+    public void updata(Data data, ViewHolder holder) {
+        int position = holder.getAdapterPosition();
+        if(position>=0){
+            mDataList.remove(position);
+            mDataList.add(position,data);
+            notifyItemChanged(position);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
-        MyViewHolder viewHolder = (MyViewHolder) v.getTag();
+        ViewHolder viewHolder = (ViewHolder) v.getTag();
         if (this.mListener != null) {
             // 得到ViewHolder当前对应的适配器中的坐标
             int pos = viewHolder.getAdapterPosition();
             // 回掉方法
-            this.mListener.onItemClick(viewHolder, mList.get(pos));
+            this.mListener.onItemClick(viewHolder, mDataList.get(pos));
         }
 
     }
 
     @Override
-    public boolean onLongClick(View v) {
-        MyViewHolder viewHolder = (MyViewHolder) v.getTag();
+     public boolean onLongClick(View v) {
+        ViewHolder viewHolder = (ViewHolder) v.getTag();
         if (this.mListener != null) {
             // 得到ViewHolder当前对应的适配器中的坐标
             int pos = viewHolder.getAdapterPosition();
             // 回掉方法
-            this.mListener.onItemLongClick(viewHolder, mList.get(pos));
+            this.mListener.onItemLongClick(viewHolder, mDataList.get(pos));
             return true;
         }
         return false;
@@ -159,31 +228,52 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<MyViewH
      */
     public interface AdapterListener<Data> {
         // 当Cell点击的时候触发
-        void onItemClick(MyViewHolder holder, Data data);
+        void onItemClick(RecyclerAdapter.ViewHolder holder, Data data);
 
         // 当Cell长按时触发
-        void onItemLongClick(MyViewHolder holder, Data data);
+        void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
     }
 
+    /**
+     * 自定义的ViewHolder
+     *
+     * @param <Data> 范型类型
+     */
+    public static abstract class ViewHolder<Data> extends RecyclerView.ViewHolder {
+
+        private RecyclerCallBack<Data> callback;
+        protected Data mData;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        /**
+         * 用于绑定数据的触发
+         *
+         * @param data 绑定的数据
+         */
+        void bind(Data data) {
+            this.mData = data;
+            onBind(data);
+        }
+
+        /**
+         * 当触发绑定数据的时候，的回掉；必须复写
+         *
+         * @param data 绑定的数据
+         */
+        protected abstract void onBind(Data data);
+
+        /**
+         * Holder自己对自己对应的Data进行更新操作
+         *
+         * @param data Data数据
+         */
+        public void updateData(Data data) {
+            if (this.callback != null) {
+                this.callback.updata(data, this);
+            }
+        }
+    }
 }
-abstract class MyViewHolder<Data> extends RecyclerView.ViewHolder{
-    protected Data mData;
-    protected RecyclerCallBack mCallBack;
-     public MyViewHolder(View itemView) {
-         super(itemView);
-     }
-
-     /**
-      * 用于绑定数据的触发
-      */
-     public void Bind(Data data){
-         this.mData = data;
-         onBind();
-     }
-
-     protected abstract void onBind();
-
-     public void updataData(Data data){
-         mCallBack.updata(data,this);
-    }
- }
