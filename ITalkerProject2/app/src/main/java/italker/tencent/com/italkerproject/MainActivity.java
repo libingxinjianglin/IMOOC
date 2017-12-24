@@ -31,6 +31,7 @@ import italker.tencent.com.common.Comon;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.app.Fragment;
 import italker.tencent.com.common.weiget.PortraitView;
+import italker.tencent.com.italkerproject.activits.AccountActivity;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
 import italker.tencent.com.italkerproject.fragments.main.ContactFragment;
 import italker.tencent.com.italkerproject.fragments.main.GroupFragment;
@@ -102,7 +103,7 @@ public class MainActivity extends Activity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.activity_float_button ){
-
+            AccountActivity.show(this);
         }
     }
 

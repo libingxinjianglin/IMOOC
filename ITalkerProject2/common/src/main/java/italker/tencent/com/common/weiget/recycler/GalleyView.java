@@ -98,6 +98,17 @@ public class GalleyView extends RecyclerView {
         return true;
     }
 
+    public String[] getPaths(){
+        int i = 0;
+        String paths[] = new String[mSelectImage.size()];
+        for (Image image:mSelectImage) {
+            String path = image.path;
+            paths[i] = path;
+            i++;
+        }
+        return paths;
+    }
+
     /**
      * 通知选中状态改变
      */
@@ -257,7 +268,7 @@ public class GalleyView extends RecyclerView {
                     .centerCrop() // 居中剪切
                     .placeholder(R.color.grey_200) // 默认颜色
                     .into(mImageView);
-           mShade.setVisibility(image.isSelect ? VISIBLE:INVISIBLE);
+            mShade.setVisibility(image.isSelect ? VISIBLE:INVISIBLE);
             mCheckBox.setVisibility(VISIBLE);
             mCheckBox.setChecked(image.isSelect);
         }

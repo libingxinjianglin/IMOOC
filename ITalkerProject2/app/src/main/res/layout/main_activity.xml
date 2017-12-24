@@ -52,7 +52,7 @@
     <net.qiujuer.genius.ui.widget.FloatActionButton
         android:id="@+id/activity_float_button"
         android:layout_width="@dimen/len_52"
-        android:layout_height="@dimen/len_52"
+        android:layout_height="65dp"
         android:src="@drawable/ic_group_add"
         app:layout_anchor="@id/activity_content_view"
         app:layout_anchorGravity="end|bottom"

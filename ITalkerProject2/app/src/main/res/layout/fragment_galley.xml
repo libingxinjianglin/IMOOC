@@ -1,0 +1,27 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="italker.tencent.com.italkerproject.fragments.media.GalleyFragment">
+
+   <android.support.design.widget.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="25dp">
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="@string/title_select_gallery"
+         />
+
+   </android.support.design.widget.AppBarLayout>
+
+   <italker.tencent.com.common.weiget.recycler.GalleyView
+       android:id="@+id/protrait_select_galleyview"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+   </italker.tencent.com.common.weiget.recycler.GalleyView>
+
+</android.support.design.widget.CoordinatorLayout>

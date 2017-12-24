@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="italker.tencent.com.italkerproject.fragments.account.UpdateFragments">
+
+    <!-- TODO: Update blank fragment layout -->
+    <italker.tencent.com.common.weiget.PortraitView
+        android:id="@+id/ima_protrait"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/len_40"
+        android:layout_height="@dimen/len_40"
+        android:layout_margin="@dimen/len_4"
+        android:scaleType="centerCrop"
+        android:background= "@color/blue_50"
+        android:text="@string/hello_blank_fragment" />
+
+</FrameLayout>
