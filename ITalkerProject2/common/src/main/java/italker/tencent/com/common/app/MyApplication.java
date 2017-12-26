@@ -16,10 +16,22 @@ public class MyApplication extends android.app.Application {
         mlication = this;
     }
 
+    /**
+     * 外部获得单例
+     * @return
+     */
+    public static MyApplication getInstance(){
+        return mlication;
+    }
+
     public static File getCacheDirw(){
         return mlication.getCacheDir();
     }
 
+    /**
+     * 获取头像的临时存储头像地址
+     * @return
+     */
     public static File getProparain(){
         File mFile = new File(getCacheDirw(),"Proparain");
         mFile.mkdir();
@@ -32,6 +44,22 @@ public class MyApplication extends android.app.Application {
         }
 
         File files = new File(mFile, SystemClock.currentThreadTimeMillis()+".jpg");
+        return files.getAbsoluteFile();
+    }
+
+    /**
+     * 获取声音文件的缓存地址
+     */
+    public static File getAudioFile(Boolean isTrue){
+        File mFile = new File(getCacheDirw(),"audio");
+        mFile.mkdir();
+
+        File[] listFiles = mFile.listFiles();
+        for (File file:listFiles) {
+            file.delete();
+        }
+
+        File files = new File(mFile,isTrue ? "tms.mp3":SystemClock.currentThreadTimeMillis()+".mp3");
         return files.getAbsoluteFile();
     }
 

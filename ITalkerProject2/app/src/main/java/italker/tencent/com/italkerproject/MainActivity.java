@@ -1,18 +1,13 @@
 package italker.tencent.com.italkerproject;
 
-import android.animation.AnimatorSet;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,15 +16,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 
-import italker.tencent.com.common.Comon;
 import italker.tencent.com.common.app.Activity;
-import italker.tencent.com.common.app.Fragment;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.activits.AccountActivity;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
