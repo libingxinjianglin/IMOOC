@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
+import drawable.tencent.com.factory.Factory;
+import drawable.tencent.com.factory.net.UpLoadHelper;
 import italker.tencent.com.common.app.Fragment;
 import italker.tencent.com.common.app.MyApplication;
 import italker.tencent.com.common.weiget.PortraitView;
@@ -25,6 +28,7 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
+ * 更新头像
  */
 public class UpdateFragments extends Fragment implements View.OnClickListener{
 
@@ -67,6 +71,20 @@ public class UpdateFragments extends Fragment implements View.OnClickListener{
             Uri mData= UCrop.getOutput(data);
             final Uri resultUri = UCrop.getOutput(data);
             Glide.with(getContext()).load(mData).asBitmap().centerCrop().into(mPortrain);
+
+
+            // 拿到本地文件的地址
+            final String localPath = mData.getPath();
+            Log.e("TAG", "localPath:" + localPath);
+
+            Factory.RunAsync(new Runnable() {
+                @Override
+                public void run() {
+                    String url = UpLoadHelper.uploadPortrait(localPath);
+                    Log.e("TAG", "url:" + url);
+                }
+            });
+
         } else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
         }

@@ -1,5 +1,7 @@
 package italker.tencent.com.italkerproject.application;
 
+import android.app.Application;
+
 import italker.tencent.com.common.app.MyApplication;
 
 /**
@@ -7,4 +9,5 @@ import italker.tencent.com.common.app.MyApplication;
  */
 
 public class app extends MyApplication {
+
 }
