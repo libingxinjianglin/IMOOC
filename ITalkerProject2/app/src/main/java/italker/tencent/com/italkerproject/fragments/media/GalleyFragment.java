@@ -37,7 +37,7 @@ public class GalleyFragment extends BottomSheetDialogFragment implements GalleyV
     @Override
     public void onStart() {
         super.onStart();
-        mGalley.setup(getLoaderManager(),this,getContext());
+        mGalley.setup(getLoaderManager(),this,getContext());   //初始化画廊的数据
     }
 
     @Override

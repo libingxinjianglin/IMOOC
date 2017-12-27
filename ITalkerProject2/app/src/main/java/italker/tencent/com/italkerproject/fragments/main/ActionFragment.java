@@ -26,19 +26,4 @@ public class ActionFragment extends Fragment {
         return R.layout.fragment_action;
     }
 
-    @Override
-    protected void initWidget(View view) {
-        mGalley = (GalleyView)view.findViewById(R.id.galley);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-        mGalley.setup(getLoaderManager(), new GalleyView.SelectedChangeListener() {
-            @Override
-            public void onSelectedCountChanged(int size) {
-
-            }
-        },getContext());
-    }
 }

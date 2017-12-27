@@ -1,6 +1,8 @@
 package italker.tencent.com.italkerproject;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -24,6 +26,7 @@ import net.qiujuer.genius.ui.widget.FloatActionButton;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.activits.AccountActivity;
+import italker.tencent.com.italkerproject.fragments.assist.PermissionFragment;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
 import italker.tencent.com.italkerproject.fragments.main.ContactFragment;
 import italker.tencent.com.italkerproject.fragments.main.GroupFragment;
@@ -83,6 +86,7 @@ public class MainActivity extends Activity
             }
         });
 
+
     }
 
     @Override
@@ -131,5 +135,9 @@ public class MainActivity extends Activity
                 setInterpolator(new AnticipateOvershootInterpolator()).
                 setDuration(480)
                 .start();
+    }
+
+    public static void show(Context context){
+        context.startActivity(new Intent(context,MainActivity.class));
     }
 }
