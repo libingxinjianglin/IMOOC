@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="italker.tencent.com.italkerproject.fragments.account.UpdateFragments">
+    tools:context="italker.tencent.com.italkerproject.fragments.user.UpdateFragments">
 
     <!-- TODO: Update blank fragment layout -->
     <italker.tencent.com.common.weiget.PortraitView

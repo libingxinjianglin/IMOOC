@@ -1,4 +1,4 @@
-package italker.tencent.com.italkerproject.fragments.account;
+package italker.tencent.com.italkerproject.fragments.user;
 
 
 import android.content.Intent;

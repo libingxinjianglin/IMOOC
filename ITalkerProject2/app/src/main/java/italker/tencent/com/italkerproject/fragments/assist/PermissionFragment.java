@@ -187,9 +187,8 @@ public class PermissionFragment extends BottomSheetDialogFragment implements Vie
 
         // 如果没有则显示当前申请权限的界面
         if (!haveAll) {
-            show(manager);
+            show(manager);   //这个类被更新了
         }
-
         return haveAll;
     }
 }
