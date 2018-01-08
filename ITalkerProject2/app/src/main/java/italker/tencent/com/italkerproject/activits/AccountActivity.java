@@ -34,6 +34,8 @@ public class AccountActivity extends Activity implements AccountTrigger{
 
     private ImageView mBgm;
 
+
+
     public static void show(Context context){
         Intent mIntent = new Intent(context,AccountActivity.class);
         context.startActivity(mIntent);
