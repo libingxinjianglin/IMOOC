@@ -7,17 +7,17 @@ package drawable.tencent.com.factory.model.api;
 public class RegiseModel {
     private String name;
     private String password;
-    private String phone;
+    private String account;
     private String pishId;
 
-    public RegiseModel(String password, String name, String phone) {
-      this(password,name,phone,null);
+    public RegiseModel(String password, String name, String account) {
+      this(password,name,account,null);
     }
 
-    public RegiseModel(String password, String name, String phone, String pishId) {
+    public RegiseModel(String password, String name, String account, String pishId) {
         this.password = password;
         this.name = name;
-        this.phone = phone;
+        this.account = account;
         this.pishId = pishId;
     }
 
@@ -38,11 +38,11 @@ public class RegiseModel {
     }
 
     public String getPhone() {
-        return phone;
+        return account;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String account) {
+        this.account = account;
     }
 
     public String getPishId() {

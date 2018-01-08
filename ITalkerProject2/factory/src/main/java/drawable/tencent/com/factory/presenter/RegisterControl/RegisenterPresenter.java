@@ -42,14 +42,14 @@ public class RegisenterPresenter extends BasePresenter<RegisterControl.View>
             view.showError(R.string.data_account_register_invalid_parameter_password);
         }else{
             //进行简单的网络请求
-            RegiseModel model = new RegiseModel(password,name,phone);
-            AccountHelper.Regist(model,this);
+           final RegiseModel model = new RegiseModel(password,name,phone);
+            AccountHelper.Regist(model,RegisenterPresenter.this);
         }
     }
 
     @Override
     public boolean check(String phone) {
-        return TextUtils.isEmpty(phone) && Pattern.matches("[1][3,9,7,8][0-9]{9}$",phone);
+        return TextUtils.isEmpty(phone) && Pattern.matches("[1][3,4,5,7,8][0-9]{9}$",phone);
     }
 
     @Override
