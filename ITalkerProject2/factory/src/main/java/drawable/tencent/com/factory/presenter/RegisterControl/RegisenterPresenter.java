@@ -49,7 +49,7 @@ public class RegisenterPresenter extends BasePresenter<RegisterControl.View>
 
     @Override
     public boolean check(String phone) {
-        return TextUtils.isEmpty(phone) && Pattern.matches("[1][3,4,5,7,8][0-9]{9}$",phone);
+        return TextUtils.isEmpty(phone);
     }
 
     @Override

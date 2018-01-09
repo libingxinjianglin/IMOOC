@@ -6,6 +6,7 @@ package drawable.tencent.com.factory.data.helper;
 
 import android.net.Network;
 
+import drawable.tencent.com.factory.Factory;
 import drawable.tencent.com.factory.R;
 import drawable.tencent.com.factory.model.api.AccountRepModl;
 import drawable.tencent.com.factory.model.api.RegiseModel;
@@ -59,9 +60,11 @@ public class AccountHelper {
                         // 进行绑定的唤起
                         bindPush(callback);
                     }
-                } else {
+                }else {
                     // TODO 对返回的RspModel中的失败的Code进行解析，解析到对应的String资源上面
                     // callback.onDataNotAvailable();
+                    // 错误解析
+                    Factory.decodeRspCode(rspModel, callback);
                 }
             }
             @Override

@@ -1,6 +1,7 @@
 package drawable.tencent.com.factory;
 
 
+import android.app.Application;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import drawable.tencent.com.factory.model.api.RspModel;
+import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.MyApplication;
 import italker.tencent.com.common.factory.data.DataSource;
 
@@ -29,6 +31,7 @@ public class Factory {
     }
 
     public Factory(){
+
         executor = Executors.newFixedThreadPool(4);
         gson = new GsonBuilder()
                 // 设置时间格式
@@ -126,5 +129,26 @@ public class Factory {
     private void logout() {
 
     }
-    
+
+    /**
+     * 处理推送来的消息
+     *
+     * @param message 消息
+     */
+    public static void dispatchPush(String message) {
+        // TODO
+    }
+
+    public static void setup(){
+        Account.load(app());
+    }
+
+    /**
+     * 返回一个全局的Application
+     * @return
+     */
+    public static MyApplication app(){
+        return MyApplication.getInstance();
+    }
+
 }

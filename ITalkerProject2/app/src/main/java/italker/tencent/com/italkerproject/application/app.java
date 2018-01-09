@@ -1,7 +1,9 @@
 package italker.tencent.com.italkerproject.application;
 
-import android.app.Application;
+import com.igexin.sdk.PushManager;
 
+import drawable.tencent.com.factory.Factory;
+import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.MyApplication;
 
 /**
@@ -9,5 +11,10 @@ import italker.tencent.com.common.app.MyApplication;
  */
 
 public class app extends MyApplication {
-
+   @Override
+   public void onCreate() {
+      super.onCreate();
+      Factory.setup();
+      PushManager.getInstance().initialize(this);
+   }
 }

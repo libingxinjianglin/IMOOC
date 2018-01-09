@@ -29,10 +29,11 @@ public class RegisterFragment extends PresenterFragment<RegisterControl.Presente
     private Button mSubmit;
     private TextView mGo_login;
     private Loading mLoading;
+    private  AccountTrigger account;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        AccountTrigger account = (AccountTrigger) context;
+        account = (AccountTrigger) context;
     }
 
     public RegisterFragment() {
@@ -59,6 +60,7 @@ public class RegisterFragment extends PresenterFragment<RegisterControl.Presente
     @Override
     public void registerSucess() {
         MainActivity.show(getContext());
+        getActivity().finish();
     }
 
     @Override
@@ -102,6 +104,8 @@ public class RegisterFragment extends PresenterFragment<RegisterControl.Presente
              * 初始化的时候我们就要实例化这个对象
              */
             mPresenter.register(phone,name,password);
+        }else if(view.getId() == R.id.txt_go_login){
+            account.triggerView();
         }
     }
 }

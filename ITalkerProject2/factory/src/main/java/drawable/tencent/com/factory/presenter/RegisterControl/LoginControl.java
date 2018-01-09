@@ -14,7 +14,7 @@ public interface LoginControl {
 
     interface Presenter extends BaseControl.Presenter{
         //发起一个注册
-        void login(String phone,String name,String password);
+        void login(String phone,String password);
         //检查手机号是否正确
         boolean check(String phone);
 
