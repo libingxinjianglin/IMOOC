@@ -10,6 +10,7 @@ import net.qiujuer.genius.ui.widget.Loading;
 
 import drawable.tencent.com.factory.presenter.RegisterControl.RegisenterPresenter;
 import drawable.tencent.com.factory.presenter.RegisterControl.RegisterControl;
+import italker.tencent.com.italkerproject.MainActivity;
 import italker.tencent.com.italkerproject.R;
 
 /**
@@ -57,7 +58,7 @@ public class RegisterFragment extends PresenterFragment<RegisterControl.Presente
 
     @Override
     public void registerSucess() {
-
+        MainActivity.show(getContext());
     }
 
     @Override
