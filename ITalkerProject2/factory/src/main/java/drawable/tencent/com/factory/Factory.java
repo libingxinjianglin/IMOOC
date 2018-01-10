@@ -6,17 +6,24 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.persistence.Account;
+import drawable.tencent.com.factory.utils.DBFlowExclusion;
 import italker.tencent.com.common.app.MyApplication;
 import italker.tencent.com.common.factory.data.DataSource;
 
 /**
  * Created by Administrator on 2017/12/27 0027.
+ */
+
+/**
+ * 全局上面的一个引用
  */
 
 public class Factory {
@@ -37,7 +44,7 @@ public class Factory {
                 // 设置时间格式
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                 // TODO 设置一个过滤器，数据库级别的Model不进行Json转换
-                //.setExclusionStrategies()
+                .setExclusionStrategies(new DBFlowExclusion())
                 .create();
     }
     /**
@@ -140,6 +147,9 @@ public class Factory {
     }
 
     public static void setup(){
+        FlowManager.init(new FlowConfig.Builder(app())
+                .openDatabasesOnInit(true)        //数据库初始化的时候就打开数据库
+                .build());
         Account.load(app());
     }
 

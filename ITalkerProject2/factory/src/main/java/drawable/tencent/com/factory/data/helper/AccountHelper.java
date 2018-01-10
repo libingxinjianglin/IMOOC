@@ -13,6 +13,7 @@ import drawable.tencent.com.factory.model.api.RegiseModel;
 import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.model.db.User;
 import drawable.tencent.com.factory.net.RemoteService;
+import drawable.tencent.com.factory.persistence.Account;
 import drawable.tencent.com.factory.presenter.RegisterControl.RegisenterPresenter;
 import italker.tencent.com.common.factory.data.DataSource;
 import okhttp3.Request;
@@ -51,8 +52,11 @@ public class AccountHelper {
                     // 拿到实体
                     AccountRepModl accountRspModel = rspModel.getResult();
                     // 判断绑定状态，是否绑定设备
+                    User user = accountRspModel.getUser();
+                    user.save();    //将得到的用户信息进行一个存储到SQLLite数据库中
+                    Account.login(accountRspModel);
                     if(accountRspModel.isBind()) {
-                        User user = accountRspModel.getUser();
+
                         // 进行的是数据库写入和缓存绑定
                         // 然后返回
                         callback.onDataLoaded(user);
@@ -80,7 +84,7 @@ public class AccountHelper {
      * @param callback Callback
      */
     public static void bindPush( final DataSource.Callback<User> callback){
-
+        Account.setbindId(true);
     }
 
 }
