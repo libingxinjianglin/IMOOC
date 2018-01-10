@@ -52,12 +52,16 @@ public class Account {
         sava(Factory.app());
     }
 
-    public static Boolean getbindId(){
-        return Account.bindId;
-    }
-
     public  static Boolean isBind(){
         return bindId;
+    }
+    /**
+     * 获取当前登录的Token
+     *
+     * @return Token
+     */
+    public static String getToken() {
+        return token;
     }
 
     /**

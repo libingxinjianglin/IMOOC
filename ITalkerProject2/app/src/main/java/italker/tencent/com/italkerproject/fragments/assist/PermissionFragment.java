@@ -26,6 +26,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class PermissionFragment extends BottomSheetDialogFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     private static final int SC = 0x0111;
+    private static boolean haveAll;
 
     public PermissionFragment() {
         // Required empty public constructor
@@ -181,7 +182,7 @@ public class PermissionFragment extends BottomSheetDialogFragment implements Vie
      */
     public static boolean haveAll(Context context, FragmentManager manager) {
         // 检查是否具有所有的权限
-        boolean haveAll = isAudioPermission(context) && isNetWorkPermission(context)
+        haveAll = isAudioPermission(context) && isNetWorkPermission(context)
                 && isOssPermission(context)
                 && isStatePermission(context);
 

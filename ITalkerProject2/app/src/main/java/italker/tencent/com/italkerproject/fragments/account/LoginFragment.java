@@ -16,6 +16,7 @@ import net.qiujuer.genius.ui.widget.Loading;
 import drawable.tencent.com.factory.presenter.RegisterControl.LoginControl;
 import drawable.tencent.com.factory.presenter.RegisterControl.LoginPresenter;
 import italker.tencent.com.common.app.Fragment;
+import italker.tencent.com.italkerproject.MainActivity;
 import italker.tencent.com.italkerproject.R;
 
 /**
@@ -86,7 +87,8 @@ public class LoginFragment extends PresenterFragment<LoginControl.Presenter> imp
 
     @Override
     public void loginSucess() {
-
+        MainActivity.show(getContext());
+        getActivity().finish();
     }
 
     @Override

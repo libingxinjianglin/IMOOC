@@ -67,7 +67,7 @@ public class LaunActivity extends Activity {
                 return ;
             }
         }
-
+        //等待广播获得pushID
         getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
             public void run() {

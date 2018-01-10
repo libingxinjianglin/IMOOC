@@ -4,12 +4,16 @@ package drawable.tencent.com.factory.net;
  * Created by Administrator on 2018/1/8 0008.
  */
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 
 import drawable.tencent.com.factory.Factory;
+import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.commont;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,6 +30,24 @@ public class Network {
         // 得到一个OK Client
 
         OkHttpClient client = new OkHttpClient.Builder()
+                //添加一个拦截器
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        // 拿到我们的请求
+                        Request original = chain.request();
+                        // 重新进行build
+                        Request.Builder builder = original.newBuilder();
+                        if (!TextUtils.isEmpty(Account.getToken())) {
+                            // 注入一个token
+                            builder.addHeader("token", Account.getToken());
+                        }
+                        builder.addHeader("Content-Type", "application/json");
+                        Request newRequest = builder.build();
+                        // 返回
+                        return chain.proceed(newRequest);
+                    }
+                })
                 .build();
 
 
