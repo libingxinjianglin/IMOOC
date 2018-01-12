@@ -137,6 +137,7 @@ public class PermissionFragment extends BottomSheetDialogFragment implements Vie
         };
         if(EasyPermissions.hasPermissions(getContext(),perms)){
                 refreshState(getView());
+                dismiss();
         }else{
             EasyPermissions.requestPermissions(this, getString(R.string.title_assist_permissions),
                     SC, perms);

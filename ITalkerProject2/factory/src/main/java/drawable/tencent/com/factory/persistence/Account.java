@@ -53,7 +53,7 @@ public class Account {
     }
 
     public  static Boolean isBind(){
-        return bindId;
+        return Account.bindId;
     }
     /**
      * 获取当前登录的Token
@@ -105,4 +105,14 @@ public class Account {
                 SQLite.select().from(User.class).where(User_Table.id.eq(userID)).querySingle();
     }
 
+    public static Boolean isComplete(){
+        //首先保证登入成功
+        if(isLogin()){
+            User user = Account.getUser();
+            return !TextUtils.isEmpty(user.getDesc()) &&
+                    !TextUtils.isEmpty(user.getPortrait()) &&
+                    user.getSex() != 0;
+        }
+        return false;
+    }
 }

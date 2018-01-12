@@ -32,7 +32,7 @@ public class LoginPresenter extends BasePresenter<LoginControl.View> implements 
             view.showError(R.string.data_account_login_invalid_parameter);
         } else {
             // 尝试传递PushId
-            LoginModel model = new LoginModel(phone, password, Account.getPushId());
+            LoginModel model = new LoginModel(password,phone,Account.getPushId());
             AccountHelper.Login(model, this);
         }
     }

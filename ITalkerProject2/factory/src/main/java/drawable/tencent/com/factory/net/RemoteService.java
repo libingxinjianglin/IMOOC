@@ -4,9 +4,12 @@ import drawable.tencent.com.factory.model.api.AccountRepModl;
 import drawable.tencent.com.factory.model.api.LoginModel;
 import drawable.tencent.com.factory.model.api.RegiseModel;
 import drawable.tencent.com.factory.model.api.RspModel;
+import drawable.tencent.com.factory.model.api.UserUpdateModel;
+import drawable.tencent.com.factory.model.card.UserCard;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -30,4 +33,7 @@ public interface RemoteService {
     @POST("account/bind/{pushId}")
     Call<RspModel<AccountRepModl>> accountBind(@Path(encoded = true,value = "pushId") String pushId);
 
+    // 用户更新的接口
+    @PUT("user")
+    Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel model);
 }

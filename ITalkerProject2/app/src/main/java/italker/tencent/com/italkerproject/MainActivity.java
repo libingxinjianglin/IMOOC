@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -23,10 +24,11 @@ import com.bumptech.glide.request.target.ViewTarget;
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 
+import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.activits.AccountActivity;
-import italker.tencent.com.italkerproject.fragments.assist.PermissionFragment;
+import italker.tencent.com.italkerproject.activits.UserActivity;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
 import italker.tencent.com.italkerproject.fragments.main.ContactFragment;
 import italker.tencent.com.italkerproject.fragments.main.GroupFragment;
@@ -54,6 +56,16 @@ public class MainActivity extends Activity
     @Override
     protected int getLayoutId() {
         return R.layout.main_activity;
+    }
+
+    @Override
+    protected boolean isArgs(Bundle bundle) {
+        if(Account.isComplete()){
+            return true;
+        }else{
+            UserActivity.show(this);
+            return false;
+        }
     }
 
     @Override

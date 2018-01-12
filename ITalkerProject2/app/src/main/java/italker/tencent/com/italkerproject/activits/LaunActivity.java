@@ -18,9 +18,13 @@ import net.qiujuer.genius.ui.compat.UiCompat;
 import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.italkerproject.MainActivity;
-
 import italker.tencent.com.italkerproject.R;
+import italker.tencent.com.italkerproject.activits.AccountActivity;
 import italker.tencent.com.italkerproject.fragments.assist.PermissionFragment;
+
+/**
+ * Created by Administrator on 2018/1/11 0011.
+ */
 
 public class LaunActivity extends Activity {
 
@@ -67,7 +71,7 @@ public class LaunActivity extends Activity {
                 return ;
             }
         }
-        //等待广播获得pushID
+        //等待广播
         getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -113,6 +117,8 @@ public class LaunActivity extends Activity {
 
     }
 
+
+
     private void startAnim(float endProgress, final Runnable endCallback) {
         // 获取一个最终的颜色
         int finalColor = Resource.Color.WHITE; // UiCompat.getColor(getResources(), R.color.white);
@@ -135,16 +141,17 @@ public class LaunActivity extends Activity {
     }
 
 
-    private final Property<LaunActivity, Object> property = new Property<LaunActivity, Object>(Object.class, "color") {
+    private final Property<italker.tencent.com.italkerproject.activits.LaunActivity, Object> property = new Property<italker.tencent.com.italkerproject.activits.LaunActivity, Object>(Object.class, "color") {
         @Override
-        public void set(LaunActivity object, Object value) {
+        public void set(italker.tencent.com.italkerproject.activits.LaunActivity object, Object value) {
             object.colorDrawable.setColor((Integer) value);
         }
 
         @Override
-        public Object get(LaunActivity object) {
+        public Object get(italker.tencent.com.italkerproject.activits.LaunActivity object) {
             return object.colorDrawable.getColor();
         }
     };
 
 }
+
