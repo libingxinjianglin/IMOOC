@@ -9,12 +9,14 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
 
+import italker.tencent.com.common.factory.model.Autor;
+
 /**
  * @author qiujuer Email:qiujuer@live.cn
  * @version 1.0.0
  */
 @Table(database = AppDatabases.class)
-public class User extends BaseModel{
+public class User extends BaseModel implements Autor{
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 

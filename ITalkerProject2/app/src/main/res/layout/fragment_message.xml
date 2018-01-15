@@ -3,12 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="italker.tencent.com.italkerproject.fragments.main.ContactFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/contact_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="message"
-        android:textColor="@color/black"/>
+        android:clipToPadding="false"
+        android:elevation="1dp"
+        android:outlineProvider="bounds"
+        android:paddingBottom="@dimen/len_12"
+        android:paddingTop="@dimen/len_12"
+        android:visibility="gone"
+        tools:targetApi="lollipop" />
+
+    <italker.tencent.com.common.weiget.EmptyView
+        android:id="@+id/contact_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

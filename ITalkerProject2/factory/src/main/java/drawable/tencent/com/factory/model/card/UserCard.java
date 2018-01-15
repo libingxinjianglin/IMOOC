@@ -3,12 +3,13 @@ package drawable.tencent.com.factory.model.card;
 import java.util.Date;
 
 import drawable.tencent.com.factory.model.db.User;
+import italker.tencent.com.common.factory.model.Autor;
 
 /**
  * Created by Administrator on 2018/1/12 0012.
  */
 
-public class UserCard {
+public class UserCard implements Autor{
         private String id;
         private String name;
         private String phone;

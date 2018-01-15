@@ -17,6 +17,7 @@ import italker.tencent.com.common.weiget.convention.PlaceHolderView;
 public abstract class Fragment extends android.support.v4.app.Fragment {
     private View mRoot;
     protected PlaceHolderView mplaceHolder;
+    private Boolean isFirst = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +37,15 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(isFirst) {
+            initFirstData();
+            isFirst = false;
+        }
         initData();
+    }
+
+    public void initFirstData() {
+
     }
 
     /**

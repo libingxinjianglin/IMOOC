@@ -48,7 +48,8 @@
         <activity
             android:name=".activits.SearchActivity"
             android:label="搜索"
-            android:theme="@style/AppTheme.TransStatusBar"></activity>
+            android:theme="@style/AppTheme.TransStatusBar" />
+        <activity android:name=".activits.MessageActivity"></activity>
     </application>
 
 </manifest>
