@@ -34,7 +34,7 @@ public interface RemoteService {
     Call<RspModel<AccountRepModl>> accountLogin(@Body LoginModel model);
 
     @POST("account/bind/{pushId}")
-    Call<RspModel<AccountRepModl>> accountBind(@Path(encoded = true,value = "pushId") String pushId);
+    Call<RspModel<AccountRepModl>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
 
     // 用户更新的接口
     @PUT("user")
@@ -45,5 +45,9 @@ public interface RemoteService {
 
     @PUT("user/follow/{followId}")
     Call<RspModel<UserCard>> userFollow(@Path("followId") String followId);
+
+    // 获取联系人列表
+    @GET("user/contact")
+    Call<RspModel<List<UserCard>>> userContacts();
 
 }

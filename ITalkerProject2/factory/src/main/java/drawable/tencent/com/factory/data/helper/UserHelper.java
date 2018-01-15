@@ -114,4 +114,27 @@ public class UserHelper {
             }
         });
     }
+
+    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback){
+        Retrofit retrofit = Network.getRetrofit();
+        RemoteService remoteService = retrofit.create(RemoteService.class);
+        Call<RspModel<List<UserCard>>> rspModelCall = remoteService.userContacts();
+        rspModelCall.enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> body = response.body();
+                if(body.success()){
+                    List<UserCard> result = body.getResult();
+                    callback.onDataLoaded(result);
+                }else{
+                    Factory.decodeRspCode(body,callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+    }
 }

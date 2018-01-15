@@ -120,6 +120,10 @@ public abstract class RecyclerAdapter<Data>
         return mDataList.size();
     }
 
+    public List<Data> getItems(){
+        return mDataList;
+    }
+
     /**
      * 插入一条数据并通知插入
      *
@@ -228,10 +232,10 @@ public abstract class RecyclerAdapter<Data>
      */
     public interface AdapterListener<Data> {
         // 当Cell点击的时候触发
-        void onItemClick(RecyclerAdapter.ViewHolder holder, Data data);
+        void onItemClick(ViewHolder holder, Data data);
 
         // 当Cell长按时触发
-        void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
+        void onItemLongClick(ViewHolder holder, Data data);
     }
 
     /**
