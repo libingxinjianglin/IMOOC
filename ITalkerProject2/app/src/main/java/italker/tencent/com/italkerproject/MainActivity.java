@@ -28,6 +28,7 @@ import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.activits.AccountActivity;
+import italker.tencent.com.italkerproject.activits.SearchActivity;
 import italker.tencent.com.italkerproject.activits.UserActivity;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
 import italker.tencent.com.italkerproject.fragments.main.ContactFragment;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity
         }
     }
 
+
     @Override
     protected void initWeiget() {
         super.initWeiget();
@@ -88,6 +90,7 @@ public class MainActivity extends Activity
 
         mLabelTitle = (TextView)findViewById(R.id.txt_title);
         mImageSearch = (ImageView)findViewById(R.id.ima_search);
+        mImageSearch.setOnClickListener(this);
         mImagePorait = (PortraitView) findViewById(R.id.ima_protrait);
 
         Glide.with(this).load(R.drawable.bg_src_morning).into(new ViewTarget<View,GlideDrawable>(mAppBar) {
@@ -97,8 +100,6 @@ public class MainActivity extends Activity
                 this.view.setBackground(resource.getCurrent());
             }
         });
-
-
     }
 
     @Override
@@ -111,7 +112,18 @@ public class MainActivity extends Activity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.activity_float_button ){
-            AccountActivity.show(this);
+            if(mHelper.getCurrentTab().extra.equals(R.string.action_group)){
+                //TODO 進入到群裡面去
+            }else{
+                //進入到搜索聯繫人界面
+              SearchActivity.show(this,SearchActivity.TYPE_USER);
+            }
+        }else if(view.getId() == R.id.ima_search){
+            /**
+             *
+             */
+           int type = mHelper.getCurrentTab().extra.equals(R.string.action_group)?SearchActivity.TYPE_GROUP:SearchActivity.TYPE_USER;
+          SearchActivity.show(this,type);
         }
     }
 

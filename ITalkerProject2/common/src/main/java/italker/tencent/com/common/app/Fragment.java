@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 
 import java.util.zip.Inflater;
 
+import italker.tencent.com.common.weiget.convention.PlaceHolderView;
+
 /**
  * Created by Administrator on 2017/11/12 0012.
  */
 
 public abstract class Fragment extends android.support.v4.app.Fragment {
     private View mRoot;
+    protected PlaceHolderView mplaceHolder;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,5 +57,9 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
     }
     protected boolean onBack(){
         return false;
+    }
+
+    public  void setPlaceHolderView(PlaceHolderView view){
+        this.mplaceHolder = view;
     }
 }

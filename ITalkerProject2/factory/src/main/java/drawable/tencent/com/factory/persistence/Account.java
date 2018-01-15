@@ -52,7 +52,7 @@ public class Account {
         sava(Factory.app());
     }
 
-    public  static Boolean isBind(){
+    public static Boolean isBind(){
         return Account.bindId;
     }
     /**

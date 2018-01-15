@@ -16,7 +16,7 @@ android {
                 GETUI_APP_KEY   : "64VZihwLm6Ab6MqiOo9FB5",
                 GETUI_APP_SECRET: "SkTGOFlyBSAyLYcdi6hRR9",
                 PACKAGE_NAME    : applicationId
-                ]
+        ]
     }
     buildTypes {
         release {
@@ -44,6 +44,6 @@ dependencies {
     compile 'com.github.yalantis:ucrop:2.2.1-native'
     compile 'pub.devrel:easypermissions:0.3.0'
     compile 'com.getui:sdk:2.9.3.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 }

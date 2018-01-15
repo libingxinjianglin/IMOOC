@@ -234,7 +234,7 @@ public class GalleyView extends RecyclerView {
         }
     }
 
-    public  class Adapter extends RecyclerAdapter<Image>{
+    public class Adapter extends RecyclerAdapter<Image>{
 
         @Override
         protected int getItemViewType(int position, Image image) {

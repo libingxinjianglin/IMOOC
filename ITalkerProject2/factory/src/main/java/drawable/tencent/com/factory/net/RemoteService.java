@@ -1,5 +1,7 @@
 package drawable.tencent.com.factory.net;
 
+import java.util.List;
+
 import drawable.tencent.com.factory.model.api.AccountRepModl;
 import drawable.tencent.com.factory.model.api.LoginModel;
 import drawable.tencent.com.factory.model.api.RegiseModel;
@@ -8,6 +10,7 @@ import drawable.tencent.com.factory.model.api.UserUpdateModel;
 import drawable.tencent.com.factory.model.card.UserCard;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -36,4 +39,11 @@ public interface RemoteService {
     // 用户更新的接口
     @PUT("user")
     Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel model);
+
+    @GET("user/search/{name}")
+    Call<RspModel<List<UserCard>>> userSearch(@Path("name") String name);
+
+    @PUT("user/follow/{followId}")
+    Call<RspModel<UserCard>> userFollow(@Path("followId") String followId);
+
 }

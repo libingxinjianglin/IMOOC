@@ -31,12 +31,19 @@ public abstract class PresenterFragment<T extends BaseControl.Presenter > extend
 
     @Override
     public void showError(int str) {
-        Toast.makeText(getContext(), getString(str), Toast.LENGTH_SHORT).show();
+        if(mplaceHolder!=null){
+            mplaceHolder.triggerError(str);
+        }else{
+            Toast.makeText(getContext(), getString(str), Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     @Override
     public void showLoading() {
-
+        if(mplaceHolder!=null){
+            mplaceHolder.triggerLoading();
+        }
     }
 
     @Override

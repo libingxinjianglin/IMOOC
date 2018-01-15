@@ -25,10 +25,11 @@
                 <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"></activity>
+            android:theme="@style/AppTheme.Main" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -43,7 +44,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activits.UserActivity"></activity>
+        <activity android:name=".activits.UserActivity" />
+        <activity
+            android:name=".activits.SearchActivity"
+            android:label="搜索"
+            android:theme="@style/AppTheme.TransStatusBar"></activity>
     </application>
 
 </manifest>
