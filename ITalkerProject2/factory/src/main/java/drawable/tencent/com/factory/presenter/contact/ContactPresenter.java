@@ -88,7 +88,7 @@ public class ContactPresenter extends BasePresenter<ContactControl.View> impleme
         DiffUtil.Callback call = new DiffUiDataCallback<User>(oldList,newList);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(call);
         // 在对比完成后进行数据的赋值
-        //getView().getRecycler().replace(newList);
+        getView().getRecycler().replace(newList);
         result.dispatchUpdatesTo(getView().getRecycler());
         
         //// TODO: 2018/1/16 0016 存在问题网络上添加数据会报错 

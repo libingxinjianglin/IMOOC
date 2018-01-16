@@ -92,7 +92,7 @@ public class MainActivity extends Activity
         mImageSearch = (ImageView)findViewById(R.id.ima_search);
         mImageSearch.setOnClickListener(this);
         mImagePorait = (PortraitView) findViewById(R.id.ima_protrait);
-
+        mImagePorait.setup(Glide.with(this),Account.getUser());
         Glide.with(this).load(R.drawable.bg_src_morning).into(new ViewTarget<View,GlideDrawable>(mAppBar) {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override

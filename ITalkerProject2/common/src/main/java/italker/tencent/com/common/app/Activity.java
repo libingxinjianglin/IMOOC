@@ -10,17 +10,22 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import italker.tencent.com.common.R;
+import italker.tencent.com.common.weiget.convention.PlaceHolderView;
 
 /**
  * Created by Administrator on 2017/11/12 0012.
  */
 
 public abstract class Activity extends AppCompatActivity {
+
+    protected PlaceHolderView mPlaceHolderView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(isArgs(getIntent().getExtras())){
             int layoutId = getLayoutId();
+            initBefore();
             setContentView(layoutId);
             initWeiget();
             initData();
@@ -28,6 +33,11 @@ public abstract class Activity extends AppCompatActivity {
             finish();
         }
     }
+
+    protected void initBefore() {
+
+    }
+
     protected void initWeiget(){
 
     }
@@ -60,5 +70,12 @@ public abstract class Activity extends AppCompatActivity {
         }
         super.onBackPressed();
     }
-
+    /**
+     * 设置占位布局
+     *
+     * @param placeHolderView 继承了占位布局规范的View
+     */
+    public void setPlaceHolderView(PlaceHolderView placeHolderView) {
+        this.mPlaceHolderView = placeHolderView;
+    }
 }

@@ -38,7 +38,7 @@ public class BasePresenter<T extends BaseControl.View> implements BaseControl.Pr
        T view = mView;
         this.mView = null;
         if(view != null){
-           this. mView.setPresenter(null);  // View对应的一个presenter为null
+          view.setPresenter(null);  // View对应的一个presenter为null
         }
     }
 }

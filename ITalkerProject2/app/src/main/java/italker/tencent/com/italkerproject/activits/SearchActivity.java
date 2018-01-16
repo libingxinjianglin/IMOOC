@@ -108,7 +108,6 @@ public class SearchActivity extends ToorbarActivity {
 
 
         }
-
         return super.onCreateOptionsMenu(menu);
     }
 

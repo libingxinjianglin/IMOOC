@@ -24,6 +24,7 @@ import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
 import italker.tencent.com.italkerproject.R;
 import italker.tencent.com.italkerproject.activits.MessageActivity;
+import italker.tencent.com.italkerproject.activits.PsersonActivity;
 import italker.tencent.com.italkerproject.fragments.account.PresenterFragment;
 import italker.tencent.com.italkerproject.fragments.search.SearchUserFragment;
 
@@ -98,7 +99,7 @@ public class ContactFragment extends PresenterFragment<ContactControl.Presenter>
         return new ContactPresenter(this);
     }
 
-    public class ViewHolder extends RecyclerAdapter.ViewHolder<User>{
+    public class ViewHolder extends RecyclerAdapter.ViewHolder<User> implements View.OnClickListener{
         private PortraitView mPortraitView;
         private TextView mTextViewDes;
         private TextView mTxtName;
@@ -106,6 +107,7 @@ public class ContactFragment extends PresenterFragment<ContactControl.Presenter>
         public ViewHolder(View itemView) {
             super(itemView);
             mPortraitView = itemView.findViewById(R.id.im_portrait);
+            mPortraitView.setOnClickListener(this);
             mTxtName = itemView.findViewById(R.id.txt_name);
             mTextViewDes = itemView.findViewById(R.id.txt_desc);
         }
@@ -115,6 +117,13 @@ public class ContactFragment extends PresenterFragment<ContactControl.Presenter>
             mPortraitView.setup(Glide.with(getContext()),user);
             mTxtName.setText(user.getName());
             mTextViewDes.setText(user.getDesc());
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(view.getId() == R.id.im_portrait){
+                PsersonActivity.show(getActivity(),mData.getId());  //点击头像的时候过来个人信息界面
+            }
         }
     }
 

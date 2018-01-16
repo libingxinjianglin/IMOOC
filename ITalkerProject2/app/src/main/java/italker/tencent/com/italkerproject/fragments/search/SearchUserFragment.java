@@ -28,6 +28,7 @@ import italker.tencent.com.common.weiget.EmptyView;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
 import italker.tencent.com.italkerproject.R;
+import italker.tencent.com.italkerproject.activits.PsersonActivity;
 import italker.tencent.com.italkerproject.activits.SearchActivity;
 import italker.tencent.com.italkerproject.fragments.account.PresenterFragment;
 
@@ -98,6 +99,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             super(itemView);
             new FollowPresenter(this);
             mPortraitView = itemView.findViewById(R.id.im_portrait);
+            mPortraitView.setOnClickListener(this);
             mTextViewDes = itemView.findViewById(R.id.txt_name);
             mImgeAdd = itemView.findViewById(R.id.im_follow);
             mImgeAdd.setOnClickListener(this);
@@ -161,6 +163,8 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         public void onClick(View view) {
             if(view.getId() == R.id.im_follow){
                 mPresenter.follow(mData.getId());
+            }else if(view.getId() == R.id.im_portrait){
+                PsersonActivity.show(getActivity(),mData.getId());  //点击头像的时候过来个人信息界面
             }
         }
     }

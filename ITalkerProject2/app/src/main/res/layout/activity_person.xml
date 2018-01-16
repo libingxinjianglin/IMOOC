@@ -21,7 +21,7 @@
         android:ellipsize="end"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_below="@+id/tool_bar"
+        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="@dimen/len_16"
         android:layout_marginRight="@dimen/len_16"
         android:layout_marginTop="@dimen/len_16"
@@ -93,6 +93,7 @@
         app:gTouchEffect="ripple"
         app:gTouchCornerRadius="22dp"
         app:gTouchColor="@color/white_alpha_48"
+        android:visibility="invisible"
        />
 
     <italker.tencent.com.common.weiget.PortraitView
@@ -100,19 +101,20 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:scaleType="centerCrop"
-        tools:src="@drawable/default_portrait"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/textView"
+        android:src="@drawable/default_portrait"
+        android:layout_below="@+id/image_title_backgroud"
+        android:layout_marginTop="-48dp"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/trans"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

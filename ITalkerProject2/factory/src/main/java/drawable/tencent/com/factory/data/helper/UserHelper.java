@@ -1,5 +1,7 @@
 package drawable.tencent.com.factory.data.helper;
 
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
 import java.util.List;
 
 import drawable.tencent.com.factory.Factory;
@@ -9,6 +11,7 @@ import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.model.api.UserUpdateModel;
 import drawable.tencent.com.factory.model.card.UserCard;
 import drawable.tencent.com.factory.model.db.User;
+import drawable.tencent.com.factory.model.db.User_Table;
 import drawable.tencent.com.factory.net.Network;
 import drawable.tencent.com.factory.net.RemoteService;
 import drawable.tencent.com.factory.presenter.contact.FollowPresenter;
@@ -137,4 +140,61 @@ public class UserHelper {
             }
         });
     }
+
+    // 从本地查询一个用户的信息
+    public static User findFromLocal(String id) {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.id.eq(id))
+                .querySingle();
+    }
+
+    public static User findFromNet(String id) {
+
+        Retrofit retrofit = Network.getRetrofit();
+        RemoteService remoteService = retrofit.create(RemoteService.class);
+        try {
+            Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
+            UserCard card = response.body().getResult();
+            if (card != null) {
+
+                // TODO 数据库的存储但是没有通知
+                User user = card.build();
+                user.save();
+
+                return user;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 搜索一个用户，优先本地缓存，
+     * 没有用然后再从网络拉取
+     */
+    public static User search(String id) {
+        User user = findFromLocal(id);
+        if (user == null) {
+            return findFromNet(id);
+        }
+        return user;
+    }
+
+    /**
+     * 搜索一个用户，优先网络查询
+     * 没有用然后再从本地缓存拉取
+     */
+    public static User searchFirstOfNet(String id) {
+        User user = findFromNet(id);
+        if (user == null) {
+            return findFromLocal(id);
+        }
+        return user;
+    }
+
 }
