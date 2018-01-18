@@ -12,5 +12,5 @@ import com.raizlabs.android.dbflow.annotation.Database;
 @Database(name =AppDatabases.name,version = AppDatabases.Version)
 public class AppDatabases {
     public static final String name = "AppDataBases";
-    public static final int Version = 1;
+    public static final int Version = 2;
 }
