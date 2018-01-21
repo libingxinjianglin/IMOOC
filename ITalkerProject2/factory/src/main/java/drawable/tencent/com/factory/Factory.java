@@ -12,6 +12,9 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import drawable.tencent.com.factory.data.group.GroupCenter;
+import drawable.tencent.com.factory.data.user.UserCenter;
+import drawable.tencent.com.factory.data.user.UserDispatcher;
 import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.persistence.Account;
 import drawable.tencent.com.factory.utils.DBFlowExclusion;
@@ -161,4 +164,7 @@ public class Factory {
         return MyApplication.getInstance();
     }
 
+    public static UserCenter getUserCenter() {
+        return UserDispatcher.getInstance();
+    }
 }

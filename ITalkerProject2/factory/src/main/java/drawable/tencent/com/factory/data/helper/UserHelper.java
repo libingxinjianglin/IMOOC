@@ -41,8 +41,8 @@ public class UserHelper {
                     UserCard result = body.getResult();
                     // 数据库的存储操作，需要把UserCard转换为User
                     // 保存用户信息
-                    User user = result.build();
-                    user.save();
+                    // 唤起进行保存的操作
+                    Factory.getUserCenter().dispatch(result);
                     // 返回成功
                     callback.onDataLoaded(result);
                 }else{
@@ -102,8 +102,7 @@ public class UserHelper {
                 RspModel<UserCard> body = response.body();
                 if(body.success()){
                     UserCard result = body.getResult();
-                    User user = result.build();
-                    user.save();              //添加一個聯繫人之後我們需要進行一個數據庫存儲
+                    Factory.getUserCenter().dispatch(result);//添加一個聯繫人之後我們需要進行一個數據庫存儲
                     //TODO 通知聯繫人列表刷新
                     callback.onDataLoaded(result);
                 }else{
@@ -118,7 +117,7 @@ public class UserHelper {
         });
     }
 
-    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback){
+    public static void refreshContacts(){
         Retrofit retrofit = Network.getRetrofit();
         RemoteService remoteService = retrofit.create(RemoteService.class);
         Call<RspModel<List<UserCard>>> rspModelCall = remoteService.userContacts();
@@ -128,15 +127,18 @@ public class UserHelper {
                 RspModel<List<UserCard>> body = response.body();
                 if(body.success()){
                     List<UserCard> result = body.getResult();
-                    callback.onDataLoaded(result);
+                    if (result == null || result.size() == 0)
+                        return;
+
+                    UserCard[] cards1 = result.toArray(new UserCard[0]);
+                    Factory.getUserCenter().dispatch(cards1);
                 }else{
-                    Factory.decodeRspCode(body,callback);
+                    Factory.decodeRspCode(body,null);
                 }
             }
 
             @Override
             public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
     }
@@ -160,7 +162,7 @@ public class UserHelper {
 
                 // TODO 数据库的存储但是没有通知
                 User user = card.build();
-                user.save();
+                DbHelper.save(User.class,user);
 
                 return user;
             }

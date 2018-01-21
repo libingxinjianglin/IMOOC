@@ -56,7 +56,7 @@ public class AccountHelper {
                     AccountRepModl accountRspModel = rspModel.getResult();
                     // 判断绑定状态，是否绑定设备
                     User user = accountRspModel.getUser();
-                    user.save();    //将得到的用户信息进行一个存储到SQLLite数据库中
+                    DbHelper.save(User.class,user);    //将得到的用户信息进行一个存储到SQLLite数据库中
                     Account.login(accountRspModel);
                     if(accountRspModel.isBind()) {
                         Account.setbindId(true);
@@ -104,7 +104,7 @@ public class AccountHelper {
                 if(body.success()){
                     AccountRepModl result = body.getResult();
                     User user = result.getUser();
-                    user.save();    //将得到的用户信息进行一个存储到SQLLite数据库中
+                    DbHelper.save(User.class,user);    //将得到的用户信息进行一个存储到SQLLite数据库中
                     Account.login(result);
                     if(result.isBind()) {
                         Account.setbindId(true);
@@ -155,7 +155,7 @@ public class AccountHelper {
                 if(body.success()){
                     AccountRepModl result = body.getResult();
                     User user = result.getUser();
-                    user.save();    //将得到的用户信息进行一个存储到SQLLite数据库中
+                    DbHelper.save(User.class,user);    //将得到的用户信息进行一个存储到SQLLite数据库中
                     Account.login(result);
                     if(result.isBind()) {       //服务器后台绑定的时候返回true
                         Account.setbindId(true);
