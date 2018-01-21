@@ -68,16 +68,11 @@ public class ContactPresenter extends BaseRecyclerPresenter<User,ContactControl.
         }
     }
 
-    private void diff(List<User> oldList, List<User> newList) {
-        DiffUtil.Callback call = new DiffUiDataCallback<User>(oldList,newList);
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(call);
-        // 在对比完成后进行数据的赋值
-        getView().getRecycler().replace(newList);
-        result.dispatchUpdatesTo(getView().getRecycler());
-        
-        //// TODO: 2018/1/16 0016 存在问题网络上添加数据会报错 
-
-        getView().onAdapterChanage();
+    @Override
+    public void destroy() {
+        super.destroy();
+        // 当界面销毁的时候，我们应该把数据监听进行销毁
+        dataSource.dispose();
     }
 
 }

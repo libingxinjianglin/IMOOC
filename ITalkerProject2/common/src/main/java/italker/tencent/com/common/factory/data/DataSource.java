@@ -38,4 +38,8 @@ public interface DataSource {
         void onDataNotAvailable(@StringRes int strRes);
     }
 
+
+    //销毁
+    void dispose();
+
 }
