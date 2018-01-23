@@ -1,5 +1,6 @@
 package italker.tencent.com.common.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,6 +19,15 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
     private View mRoot;
     protected PlaceHolderView mplaceHolder;
     private Boolean isFirst = true;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // 初始化参数
+        initArgs(getArguments());
+
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,5 +80,12 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
 
     public  void setPlaceHolderView(PlaceHolderView view){
         this.mplaceHolder = view;
+    }
+
+    /**
+     * 初始化相关参数
+     */
+    protected void initArgs(Bundle bundle) {
+
     }
 }

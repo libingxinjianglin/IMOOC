@@ -20,7 +20,7 @@ import java.util.Objects;
  * @version 1.0.0
  */
 @Table(database = AppDatabases.class)
-public class GroupMember extends BaseModel {
+public class GroupMember extends BaseDbModel<GroupMember> {
     // 消息通知级别
     public static final int NOTIFY_LEVEL_INVALID = -1; // 关闭消息
     public static final int NOTIFY_LEVEL_NONE = 0; // 正常
@@ -119,5 +119,19 @@ public class GroupMember extends BaseModel {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean isSame(GroupMember old) {
+        return Objects.equals(id,old.id);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean isUiContentSame(GroupMember old) {
+        return  Objects.equals(alias, old.alias)
+                && Objects.equals(modifyAt, old.modifyAt)
+                && Objects.equals(isOwner,old.isOwner);
     }
 }

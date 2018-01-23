@@ -22,6 +22,7 @@ import drawable.tencent.com.factory.model.db.AppDatabases;
 import drawable.tencent.com.factory.model.db.User;
 import drawable.tencent.com.factory.model.db.User_Table;
 import drawable.tencent.com.factory.persistence.Account;
+import drawable.tencent.com.factory.presenter.BaseSourcePresenter;
 import drawable.tencent.com.factory.utils.DiffUiDataCallback;
 import italker.tencent.com.common.factory.data.DataSource;
 import italker.tencent.com.common.factory.presenter.BasePresenter;
@@ -32,13 +33,11 @@ import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
  * Created by Administrator on 2018/1/15 0015.
  */
 
-public class ContactPresenter extends BaseRecyclerPresenter<User,ContactControl.View> implements ContactControl.Presenter,
+public class ContactPresenter extends BaseSourcePresenter<User,User,ContactDataSource,ContactControl.View> implements ContactControl.Presenter,
         DataSource.SucceedCallback<List<User>>{
 
-    private ContactDataSource dataSource;
     public ContactPresenter(ContactControl.View view) {
-        super(view);
-        dataSource = new ContactRepository();
+        super(new ContactRepository(),view);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class ContactPresenter extends BaseRecyclerPresenter<User,ContactControl.
         super.statr();
         //TODO 具體加載數據
         //观察者模式这里面已经给我们进行了一次数据库的刷新
-        dataSource.load(this);
+//        dataSource.load(this);
         //网络更新
         UserHelper.refreshContacts();
             // TODO 问题：
@@ -66,13 +65,6 @@ public class ContactPresenter extends BaseRecyclerPresenter<User,ContactControl.
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(data);
             refreshData(result,users);
         }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        // 当界面销毁的时候，我们应该把数据监听进行销毁
-        dataSource.dispose();
     }
 
 }

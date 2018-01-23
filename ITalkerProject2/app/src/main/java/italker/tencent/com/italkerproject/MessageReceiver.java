@@ -43,7 +43,7 @@ public class MessageReceiver extends BroadcastReceiver {
                 byte[] payload = bundle.getByteArray("payload");
                 if (payload != null) {
                     String message = new String(payload);
-                    Log.i(TAG, "GET_MSG_DATA:" + message);
+                    Log.e(TAG, "GET_MSG_DATA:" + message);
                     onMessageArrived(message);
                 }
                 break;

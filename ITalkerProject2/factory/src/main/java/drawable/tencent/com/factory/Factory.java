@@ -147,6 +147,7 @@ public class Factory {
      */
     public static void dispatchPush(String message) {
         // TODO
+
     }
 
     public static void setup(){
@@ -167,4 +168,5 @@ public class Factory {
     public static UserCenter getUserCenter() {
         return UserDispatcher.getInstance();
     }
+
 }

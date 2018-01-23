@@ -49,7 +49,10 @@
             android:name=".activits.SearchActivity"
             android:label="搜索"
             android:theme="@style/AppTheme.TransStatusBar" />
-        <activity android:name=".activits.MessageActivity"></activity>
+        <activity
+            android:name=".activits.MessageActivity"
+            android:theme="@style/AppTheme.TransStatusBar"></activity>
+
         <activity android:name=".activits.PsersonActivity"></activity>
     </application>
 

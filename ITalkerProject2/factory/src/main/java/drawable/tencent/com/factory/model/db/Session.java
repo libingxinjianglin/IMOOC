@@ -23,7 +23,7 @@ import drawable.tencent.com.factory.utils.DiffUiDataCallback;
  * @version 1.0.0
  */
 @Table(database = AppDatabases.class)
-public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffer<Session> {
+public class Session extends BaseDbModel<Session> {
     @PrimaryKey
     private String id; // Id, 是Message中的接收者User的Id或者群的Id
     @Column
