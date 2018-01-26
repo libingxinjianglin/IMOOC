@@ -4,9 +4,11 @@ import java.util.List;
 
 import drawable.tencent.com.factory.model.api.AccountRepModl;
 import drawable.tencent.com.factory.model.api.LoginModel;
+import drawable.tencent.com.factory.model.api.MsgCreateModel;
 import drawable.tencent.com.factory.model.api.RegiseModel;
 import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.model.api.UserUpdateModel;
+import drawable.tencent.com.factory.model.card.MessageCard;
 import drawable.tencent.com.factory.model.card.UserCard;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -53,5 +55,9 @@ public interface RemoteService {
     //获得指定用户id的用户的信息
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userFind(@Path("userId") String userId);
+
+    //发送消息
+    @POST("msg")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
 }
 

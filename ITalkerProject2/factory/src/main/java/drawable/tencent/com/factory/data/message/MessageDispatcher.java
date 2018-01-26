@@ -27,9 +27,9 @@ public class MessageDispatcher implements MessageCenter {
     // 单线程池；处理卡片一个个的消息进行处理
     public final Executor executor = Executors.newSingleThreadExecutor();
     public static MessageCenter getInstance(){
-        if(instance != null){
+        if(instance == null){
             synchronized (MessageDispatcher.class){
-                if(instance != null){
+                if(instance == null){
                     instance = new MessageDispatcher();
                 }
             }

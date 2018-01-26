@@ -4,15 +4,24 @@ package italker.tencent.com.italkerproject.fragments.message;
 import android.os.Bundle;
 
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
+
+import drawable.tencent.com.factory.model.db.User;
+import drawable.tencent.com.factory.presenter.message.ChatControl;
+import drawable.tencent.com.factory.presenter.message.ChatUserPresenter;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.R;
 
 
-public class ChatUserFragment extends ChatFragment {
+public class ChatUserFragment extends ChatFragment<User> implements ChatControl.UserView {
 
     public PortraitView mPortraitView;
 
@@ -42,7 +51,7 @@ public class ChatUserFragment extends ChatFragment {
         }else{
             verticalOffset = Math.abs(verticalOffset);
             int totalScrollRange = appBarLayout.getTotalScrollRange();
-            if(totalScrollRange <= verticalOffset){    //我的便宜连为1你总共也为1
+            if(totalScrollRange <= verticalOffset){    //我的偏移量连为1你总共也为1
                 mPortraitView.setVisibility(View.INVISIBLE);
                 mPortraitView.setScaleX(0);
                 mPortraitView.setScaleY(0);
@@ -57,5 +66,23 @@ public class ChatUserFragment extends ChatFragment {
 
             }
         }
+    }
+
+    @Override
+    public void onInit(User user) {
+        //对和你聊天的朋友进行初始化操作
+        mPortraitView.setup(Glide.with(this),user.getPortrait());
+        mCollapsingToolbarLayout.setTitle(user.getName());
+        Glide.with(this).load(R.drawable.default_banner_personal).into(new ViewTarget<CollapsingToolbarLayout,GlideDrawable>(mCollapsingToolbarLayout) {
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                this.view.setContentScrim(resource.getCurrent());
+            }
+        });
+    }
+
+    @Override
+    protected ChatControl.Presenter initPresenter() {
+        return new ChatUserPresenter(this,mReceiverId);
     }
 }
