@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import drawable.tencent.com.factory.model.db.Group;
+import drawable.tencent.com.factory.model.db.Message;
+import drawable.tencent.com.factory.model.db.Session;
 import drawable.tencent.com.factory.model.db.User;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.app.Fragment;
@@ -48,6 +50,16 @@ public class MessageActivity extends Activity {
         Intent intent = new Intent(context, MessageActivity.class);
         intent.putExtra(KEY_RECEIVER_ID,user.getId());
         intent.putExtra(KEY_RECEIVER_GROUP_ID,true);
+        context.startActivity(intent);
+    }
+
+    public static void show(Context context,Session session){
+        if(session == null || context == null){
+            return ;
+        }
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtra(KEY_RECEIVER_ID,session.getId());
+        intent.putExtra(KEY_RECEIVER_GROUP_ID,session.getReceiverType() == Message.RECEIVER_TYPE_GROUP);
         context.startActivity(intent);
     }
     @Override

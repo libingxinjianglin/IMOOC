@@ -1,5 +1,6 @@
 package drawable.tencent.com.factory.data.helper;
 
+import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import drawable.tencent.com.factory.Factory;
@@ -9,6 +10,8 @@ import drawable.tencent.com.factory.model.card.MessageCard;
 import drawable.tencent.com.factory.model.card.UserCard;
 import drawable.tencent.com.factory.model.db.Message;
 import drawable.tencent.com.factory.model.db.Message_Table;
+import drawable.tencent.com.factory.model.db.Session;
+import drawable.tencent.com.factory.model.db.Session_Table;
 import drawable.tencent.com.factory.net.Network;
 import drawable.tencent.com.factory.net.RemoteService;
 import retrofit2.Call;
@@ -66,5 +69,23 @@ public class MessageHelper {
                 });
             }
         });
+    }
+
+    public static Message findLastWithUser(String id) {
+        return SQLite.select()
+                .from(Message.class)
+                .where(OperatorGroup.clause()
+                        .and(Message_Table.sender_id.eq(id))
+                        .and(Message_Table.group_id.isNull()))
+                .or(Message_Table.receiver_id.eq(id))
+                .orderBy(Message_Table.createAt, false) // 倒序查询
+                .querySingle();
+    }
+
+    public static Message findLastWithGroup(String id) {
+        return SQLite.select().from(Message.class)
+                .where(Message_Table.group_id.eq(id))
+                .orderBy(Message_Table.createAt, false) // 倒序查询
+                .querySingle();
     }
 }
