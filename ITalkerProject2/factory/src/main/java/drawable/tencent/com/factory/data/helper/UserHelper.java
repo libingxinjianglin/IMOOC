@@ -12,8 +12,10 @@ import drawable.tencent.com.factory.model.api.UserUpdateModel;
 import drawable.tencent.com.factory.model.card.UserCard;
 import drawable.tencent.com.factory.model.db.User;
 import drawable.tencent.com.factory.model.db.User_Table;
+import drawable.tencent.com.factory.model.db.view.UserSampleModel;
 import drawable.tencent.com.factory.net.Network;
 import drawable.tencent.com.factory.net.RemoteService;
+import drawable.tencent.com.factory.persistence.Account;
 import drawable.tencent.com.factory.presenter.contact.FollowPresenter;
 import italker.tencent.com.common.factory.data.DataSource;
 import retrofit2.Call;
@@ -197,6 +199,34 @@ public class UserHelper {
             return findFromLocal(id);
         }
         return user;
+    }
+
+    /**
+     * 获取联系人
+     */
+    public static List<User> getContact() {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUser().getId()))
+                .limit(100)
+                .queryList();
+    }
+
+
+    // 获取一个联系人列表，
+    // 但是是一个简单的数据的
+    public static List<UserSampleModel> getSampleContact() {
+        //"select id = ??";
+        //"select User_id = ??";
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUser().getId()))
+                .orderBy(User_Table.name, true)
+                .queryCustomList(UserSampleModel.class);
     }
 
 }

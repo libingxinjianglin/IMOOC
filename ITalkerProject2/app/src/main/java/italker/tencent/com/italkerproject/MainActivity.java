@@ -28,6 +28,7 @@ import drawable.tencent.com.factory.persistence.Account;
 import italker.tencent.com.common.app.Activity;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.italkerproject.activits.AccountActivity;
+import italker.tencent.com.italkerproject.activits.GroupCreateActivity;
 import italker.tencent.com.italkerproject.activits.SearchActivity;
 import italker.tencent.com.italkerproject.activits.UserActivity;
 import italker.tencent.com.italkerproject.fragments.main.ActionFragment;
@@ -113,7 +114,7 @@ public class MainActivity extends Activity
     public void onClick(View view) {
         if(view.getId() == R.id.activity_float_button ){
             if(mHelper.getCurrentTab().extra.equals(R.string.action_group)){
-                //TODO 進入到群裡面去
+                GroupCreateActivity.show(this);
             }else{
                 //進入到搜索聯繫人界面
               SearchActivity.show(this,SearchActivity.TYPE_USER);
