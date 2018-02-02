@@ -1,9 +1,12 @@
 package italker.tencent.com.italkerproject.activits;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.widget.Toast;
 
 import italker.tencent.com.common.app.ToorbarActivity;
 import italker.tencent.com.common.factory.presenter.BaseControl;
+import italker.tencent.com.italkerproject.R;
 
 /**
  * Created by Administrator on 2018/1/16 0016.
@@ -12,6 +15,7 @@ import italker.tencent.com.common.factory.presenter.BaseControl;
 public abstract class PresenterToolbarActivity<Presenter extends BaseControl.Presenter>
         extends ToorbarActivity implements BaseControl.View<Presenter> {
     protected Presenter mPresenter;
+    public ProgressDialog mLoadingDialog;
 
     @Override
     protected void initBefore() {
@@ -38,6 +42,9 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseControl.Pre
 
     @Override
     public void showError(int str) {
+        // 不管你怎么样，我先隐藏我
+        hideDialogLoading();
+
         // 显示错误, 优先使用占位布局
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerError(str);
@@ -50,10 +57,39 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseControl.Pre
     public void showLoading() {
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerLoading();
+        }else{
+            ProgressDialog dialog = mLoadingDialog;
+            if (dialog == null) {
+                dialog = new ProgressDialog(this, R.style.AppTheme_Dialog_Alert_Light);
+                // 不可触摸取消
+                dialog.setCanceledOnTouchOutside(false);
+                // 强制取消关闭界面
+                dialog.setCancelable(true);
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+                mLoadingDialog = dialog;
+            }
+
+            dialog.setMessage(getText(R.string.prompt_loading));
+            dialog.show();
+        }
+    }
+    protected void hideDialogLoading() {
+        ProgressDialog dialog = mLoadingDialog;
+        if (dialog != null) {
+            mLoadingDialog = null;
+            dialog.dismiss();
         }
     }
 
     protected void hideLoading() {
+        // 不管你怎么样，我先隐藏我
+        hideDialogLoading();
+
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerOk();
         }

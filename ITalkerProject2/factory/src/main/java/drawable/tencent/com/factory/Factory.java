@@ -236,7 +236,7 @@ public class Factory {
         return MessageDispatcher.getInstance();
     }
 
-    private static GroupCenter getGroupCenter() {
+    public static GroupCenter getGroupCenter() {
         return GroupDispatcher.instance();
     }
 

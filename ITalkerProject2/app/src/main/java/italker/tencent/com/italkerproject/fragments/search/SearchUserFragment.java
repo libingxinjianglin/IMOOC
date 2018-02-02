@@ -35,7 +35,8 @@ import italker.tencent.com.italkerproject.fragments.account.PresenterFragment;
 /**
  * 聯繫人搜索界面
  */
-public class SearchUserFragment extends PresenterFragment<SearchContract.Presenter> implements SearchContract.UserView,SearchActivity.SearchFragment {
+public class SearchUserFragment extends PresenterFragment<SearchContract.Presenter>
+        implements SearchContract.UserView,SearchActivity.SearchFragment {
 
     private RecyclerView mRecyclerView;
     private EmptyView mEmptyView;

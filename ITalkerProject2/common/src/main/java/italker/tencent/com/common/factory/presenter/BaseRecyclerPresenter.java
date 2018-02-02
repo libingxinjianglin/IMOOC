@@ -30,6 +30,7 @@ public class BaseRecyclerPresenter<ViewModel,View extends BaseControl.RecyclerVi
                 //更新数据并且刷新界面
                 RecyclerAdapter adapter = view.getRecycler();
                 adapter.replace(dataList);
+                view.onAdapterChanage();
             }
         });
     }
@@ -56,8 +57,9 @@ public class BaseRecyclerPresenter<ViewModel,View extends BaseControl.RecyclerVi
         RecyclerAdapter adapter = view.getRecycler();
         adapter.getItems().clear();
         adapter.getItems().addAll(dataList);
-        view.onAdapterChanage();   //通知界面刷新占位布局
+       //通知界面刷新占位布局
         //进行更量更新
         result.dispatchUpdatesTo(adapter);
+        view.onAdapterChanage();
     }
 }

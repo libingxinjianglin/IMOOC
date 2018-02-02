@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yalantis.ucrop.UCrop;
@@ -117,7 +119,10 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     @Override
     public void onCreateSucceed() {
-
+        // 不管你怎么样，我先隐藏我
+        hideDialogLoading();
+        Toast.makeText(this,"创建成功",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
@@ -127,7 +132,8 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     @Override
     public void onAdapterChanage() {
-        //界面长期显示所以不需要做任何的变化
+        // 不管你怎么样，我先隐藏我
+        hideDialogLoading();
     }
 
     @Override
@@ -158,6 +164,12 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
             mPortrait = itemView.findViewById(R.id.im_portrait);
             mName = itemView.findViewById(R.id.txt_name);
             mSelect = itemView.findViewById(R.id.cb_select);
+            mSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mPresenter.changeSelect(mData,b);
+                }
+            });
         }
 
         @Override

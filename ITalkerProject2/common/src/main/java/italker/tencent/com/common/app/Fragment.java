@@ -78,7 +78,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
         return false;
     }
 
-    public  void setPlaceHolderView(PlaceHolderView view){
+    public void setPlaceHolderView(PlaceHolderView view){
         this.mplaceHolder = view;
     }
 
