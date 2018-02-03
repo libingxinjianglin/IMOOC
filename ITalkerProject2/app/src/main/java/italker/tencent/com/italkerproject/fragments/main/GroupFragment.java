@@ -90,12 +90,14 @@ public class GroupFragment extends PresenterFragment<GroupsControl.Presenter> im
         private PortraitView mPortraitView;
         private TextView mTextViewDes;
         private TextView mTxtName;
+        private TextView mTxtMembers;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mPortraitView = itemView.findViewById(R.id.im_portrait);
             mTxtName = itemView.findViewById(R.id.txt_name);
             mTextViewDes = itemView.findViewById(R.id.txt_desc);
+            mTxtMembers = itemView.findViewById(R.id.txt_member);
         }
 
         @Override
@@ -103,6 +105,11 @@ public class GroupFragment extends PresenterFragment<GroupsControl.Presenter> im
             mPortraitView.setup(Glide.with(getContext()),user.getPicture());
             mTxtName.setText(user.getName());
             mTextViewDes.setText(user.getDesc());
+            if (user.holder != null && user.holder instanceof String) {
+                mTxtMembers.setText((String) user.holder);
+            } else {
+                mTxtMembers.setText("");
+            }
         }
 
     }

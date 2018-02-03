@@ -2,6 +2,7 @@ package drawable.tencent.com.factory.data.helper;
 
 import android.util.Log;
 
+import com.raizlabs.android.dbflow.sql.language.Join;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -11,9 +12,14 @@ import drawable.tencent.com.factory.R;
 import drawable.tencent.com.factory.model.api.GroupCreateModel;
 import drawable.tencent.com.factory.model.api.RspModel;
 import drawable.tencent.com.factory.model.card.GroupCard;
+import drawable.tencent.com.factory.model.card.GroupMemberCard;
 import drawable.tencent.com.factory.model.db.Group;
+import drawable.tencent.com.factory.model.db.GroupMember;
+import drawable.tencent.com.factory.model.db.GroupMember_Table;
 import drawable.tencent.com.factory.model.db.Group_Table;
 import drawable.tencent.com.factory.model.db.User;
+import drawable.tencent.com.factory.model.db.User_Table;
+import drawable.tencent.com.factory.model.db.view.MemberUserModel;
 import drawable.tencent.com.factory.net.Network;
 import drawable.tencent.com.factory.net.RemoteService;
 import drawable.tencent.com.factory.presenter.search.SearchGroupPresenter;
@@ -139,5 +145,54 @@ public class GroupHelper {
                 // 不做任何事情
             }
         });
+    }
+
+   // 获取一个群的成员数量
+    public static long getMemberCount(String id) {
+        return SQLite.selectCountOf()
+                .from(GroupMember.class)
+                .where(GroupMember_Table.group_id.eq(id))
+                .count();
+    }
+
+    // 从网络去刷新一个群的成员信息
+    public static void refreshGroupMember(Group group) {
+        //进行网络请求
+        Retrofit retrofit = Network.getRetrofit();
+        RemoteService service = retrofit.create(RemoteService.class);
+        Call<RspModel<List<GroupMemberCard>>> call = service.groupMembers(group.getId());
+        call.enqueue(new Callback<RspModel<List<GroupMemberCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupMemberCard>>> call, Response<RspModel<List<GroupMemberCard>>> response) {
+                RspModel<List<GroupMemberCard>> body = response.body();
+                if(body.success()){
+                    List<GroupMemberCard> result = body.getResult();
+                    if(result != null && result.size()>0){
+                        Factory.getGroupCenter().dispatch(result.toArray(new GroupMemberCard[0]));
+                    }
+                }else{
+                    Factory.decodeRspCode(body,null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupMemberCard>>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static List<MemberUserModel> getMemberUsers(String groupId, int size) {
+        return SQLite.select(GroupMember_Table.alias.withTable().as("alias"),
+                User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(GroupMember.class)
+                .join(User.class, Join.JoinType.INNER)
+                .on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable()))
+                .where(GroupMember_Table.group_id.withTable().eq(groupId))
+                .orderBy(GroupMember_Table.user_id, true)
+                .limit(size)
+                .queryCustomList(MemberUserModel.class);
     }
 }
