@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,8 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
 
     private Adapter adapter;
 
+    public ImageView mHead;
+
     public  CollapsingToolbarLayout mCollapsingToolbarLayout;
 
 
@@ -67,6 +70,7 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
         super.initWidget(view);
         mToolbar = view.findViewById(R.id.toolbar);
         mRecyclerView = view.findViewById(R.id.recycler);
+        mHead = view.findViewById(R.id.im_header);
         mAppBarLayout = view.findViewById(R.id.appbar);
         mContent = view.findViewById(R.id.edit_content);
         mCollapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);

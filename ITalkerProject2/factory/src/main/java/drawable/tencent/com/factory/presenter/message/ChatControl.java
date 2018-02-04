@@ -1,8 +1,11 @@
 package drawable.tencent.com.factory.presenter.message;
 
+import java.util.List;
+
 import drawable.tencent.com.factory.model.db.Group;
 import drawable.tencent.com.factory.model.db.Message;
 import drawable.tencent.com.factory.model.db.User;
+import drawable.tencent.com.factory.model.db.view.MemberUserModel;
 import italker.tencent.com.common.factory.presenter.BaseControl;
 
 /**
@@ -37,6 +40,10 @@ public interface ChatControl {
 
     // 群聊天的界面
     interface GroupView extends View<Group> {
+        // 显示管理员菜单
+        void showAdminOption(boolean isAdmin);
 
+        // 初始化成员信息
+        void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
     }
 }

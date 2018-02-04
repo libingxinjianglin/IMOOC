@@ -23,6 +23,7 @@ import italker.tencent.com.common.weiget.EmptyView;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
 import italker.tencent.com.italkerproject.R;
+import italker.tencent.com.italkerproject.activits.MessageActivity;
 import italker.tencent.com.italkerproject.fragments.account.PresenterFragment;
 
 /**
@@ -64,6 +65,17 @@ public class GroupFragment extends PresenterFragment<GroupsControl.Presenter> im
             @Override
             protected ViewHolder<Group> onCreateViewHolder(View root, int viewType) {
                 return new GroupFragment.ViewHolder(root);
+            }
+        });
+        mAdapter.setListener(new RecyclerAdapter.AdapterListener<Group>() {
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder holder, Group group) {
+                MessageActivity.show(getContext(),group);
+            }
+
+            @Override
+            public void onItemLongClick(RecyclerAdapter.ViewHolder holder, Group group) {
+
             }
         });
         mEmptyView.bind(mRecyclerView);

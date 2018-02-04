@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<italker.tencent.com.common.weiget.PortraitView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/portraitMinSize"
+    android:layout_height="@dimen/portraitMinSize"
+    android:layout_margin="1dp"
+    android:orientation="vertical"
+    android:padding="@dimen/len_2"
+    android:src="@drawable/default_portrait">
+
+</italker.tencent.com.common.weiget.PortraitView>

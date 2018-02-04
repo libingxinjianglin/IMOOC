@@ -56,6 +56,10 @@ public class MsgCreateModel {
         return receiverType;
     }
 
+    public void setReceiverType(int receiverType) {
+        this.receiverType = receiverType;
+    }
+
     /**
      * 建造者模式，快速的建立一个发送Model
      */

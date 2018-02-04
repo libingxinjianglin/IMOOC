@@ -47,6 +47,7 @@ public class MessageHelper {
 
                 //直接发送
                 RemoteService service = Network.getRetrofit().create(RemoteService.class);
+
                 Call<RspModel<MessageCard>> call = service.msgPush(model);
                 call.enqueue(new Callback<RspModel<MessageCard>>() {
                     @Override
