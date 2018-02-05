@@ -45,5 +45,7 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.3.0'
     compile 'com.getui:sdk:2.9.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'net.qiujuer.widget:airpanel:1.1.0'
+    compile 'com.google.code.gson:gson:2.8.0'
     testCompile 'junit:junit:4.12'
 }

@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 /**
- * @author qiujuer Email:qiujuer@live.cn
+ * @author hugh
  * @version 1.0.0
  */
 @SuppressWarnings({"unchecked", "unused"})

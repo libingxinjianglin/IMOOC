@@ -51,7 +51,8 @@
             android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name=".activits.MessageActivity"
-            android:theme="@style/AppTheme.TransStatusBar" />
+            android:theme="@style/AppTheme.TransStatusBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activits.PsersonActivity" />
         <activity android:name=".activits.GroupCreateActivity"
             android:theme="@style/AppTheme.Group.Create"></activity>

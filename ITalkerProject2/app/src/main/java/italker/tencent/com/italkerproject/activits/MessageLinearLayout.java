@@ -7,11 +7,13 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import net.qiujuer.widget.airpanel.AirPanelLinearLayout;
+
 /**
  * Created by Administrator on 2018/1/23 0023.
  */
 
-public class MessageLinearLayout extends LinearLayout {
+public class MessageLinearLayout extends AirPanelLinearLayout {
     public MessageLinearLayout(Context context) {
         super(context);
     }

@@ -21,6 +21,8 @@ import com.raizlabs.android.dbflow.structure.Model;
 
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
+import net.qiujuer.widget.airpanel.AirPanel;
+import net.qiujuer.widget.airpanel.Util;
 
 import java.util.Objects;
 
@@ -34,12 +36,14 @@ import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
 import italker.tencent.com.italkerproject.R;
 import italker.tencent.com.italkerproject.activits.MessageActivity;
 import italker.tencent.com.italkerproject.fragments.account.PresenterFragment;
+import italker.tencent.com.italkerproject.fragments.panel.FaceFragment;
 
 /**
  * Created by Administrator on 2018/1/23 0023.
  */
 
-public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.Presenter> implements AppBarLayout.OnOffsetChangedListener,ChatControl.View<Model> {
+public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.Presenter>
+        implements AppBarLayout.OnOffsetChangedListener,ChatControl.View<Model>,FaceFragment.PanelCallback {
     protected String mReceiverId;
 
     public Toolbar mToolbar;
@@ -52,11 +56,17 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
 
     public View mSubmit;
 
+    public ImageView mFaceView;
+
     private Adapter adapter;
 
     public ImageView mHead;
 
     public  CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    private AirPanel.Boss boss;
+
+    private FaceFragment fragmentById;
 
 
     @Override
@@ -74,6 +84,26 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
         mAppBarLayout = view.findViewById(R.id.appbar);
         mContent = view.findViewById(R.id.edit_content);
         mCollapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        fragmentById = (FaceFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        fragmentById.setup(this);
+        boss =  view.findViewById(R.id.lay_contenct);
+        mFaceView = view.findViewById(R.id.btn_face);
+        mFaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //表情界面显示
+                boss.openPanel();
+                fragmentById.showFace();
+            }
+        });
+        boss.setup(new AirPanel.PanelListener() {
+            @Override
+            public void requestHideSoftKeyboard() {
+                //请求隐藏软键盘
+                //参数是焦点的空控件
+                Util.hideKeyboard(mContent);
+            }
+        });
         mContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -291,5 +321,10 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
     @Override
     public RecyclerAdapter<Message> getRecycler() {
         return adapter;
+    }
+
+    @Override
+    public EditText getInputEditText() {
+        return mContent;
     }
 }
