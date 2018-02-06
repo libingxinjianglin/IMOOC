@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.qiujuer.genius.ui.Ui;
+
 import drawable.tencent.com.factory.model.db.Session;
 import drawable.tencent.com.factory.model.db.User;
 import drawable.tencent.com.factory.presenter.message.SessionControl;
 import drawable.tencent.com.factory.presenter.message.SessionPresenter;
 import italker.tencent.com.common.app.Fragment;
+import italker.tencent.com.common.face.Face;
 import italker.tencent.com.common.utils.DataTime;
 import italker.tencent.com.common.weiget.EmptyView;
 import italker.tencent.com.common.weiget.PortraitView;
@@ -118,7 +123,11 @@ public class ActionFragment extends PresenterFragment<SessionControl.Presenter> 
         protected void onBind(Session session) {
             mPortraitView.setup(Glide.with(ActionFragment.this), session.getPicture());
             mTxtName.setText(session.getTitle());
-            mTextViewDes.setText(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+
+            Spannable mSpan = new SpannableString(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+            Face.decode(mTextViewDes,mSpan, (int) Ui.dipToPx(getResources(),20));
+            // 把内容设置到布局上
+            mTextViewDes.setText(mSpan);
             mData.setText(DataTime.getSampleData(session.getModifyAt()));
         }
 

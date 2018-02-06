@@ -49,6 +49,7 @@ public abstract class RecyclerAdapter<Data>
         return getItemViewType(position, mDataList.get(position));
     }
 
+
     /**
      * 得到布局的类型
      *

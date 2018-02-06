@@ -3,16 +3,23 @@ package italker.tencent.com.common.face;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.EditText;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
@@ -28,9 +35,12 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import italker.tencent.com.common.R;
 import italker.tencent.com.common.utils.StreamUtil;
 
 /**
@@ -210,11 +220,123 @@ public class Face {
                     }
                 });
     }
-
-    // 从spannable解析表情并替换显示
-    public static List<FaceTab> decode(@NonNull View target, final Spannable spannable, final int size) {
+    // 拿一个Bean
+    // key: ft001
+    public static Bean get(Context context, String key) {
+        init(context);
+        if (FACE_MAP.containsKey(key)) {
+            return FACE_MAP.get(key);
+        }
         return null;
     }
+    // 从spannable解析表情并替换显示
+    public static Spannable decode(@NonNull View target, final Spannable spannable, final int size) {
+        if(spannable == null)
+            return null;
+        String str = spannable.toString();
+        if(TextUtils.isEmpty(str))
+            return null;
+
+        // 进行正在匹配[][][]
+        Pattern pattern = Pattern.compile("(\\[[^\\[\\]:\\s\\n]+\\])");
+        Matcher matcher = pattern.matcher(str);
+
+        final Context context = target.getContext();
+
+        while (matcher.find()) {
+            // [ft112]
+            String key = matcher.group();
+            if (TextUtils.isEmpty(key))
+                continue;
+
+            Bean bean = get(context, key.replace("[", "").replace("]", ""));
+            if (bean == null)
+                continue;
+
+            final int start = matcher.start();
+            final int end = matcher.end();
+
+
+            // 得到一个复写后的标示
+            ImageSpan span = new FaceSpan(context, target, bean.preview, size);
+            spannable.setSpan(span,start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        }
+        return spannable;
+    }
+    // 表情标示
+    public static class FaceSpan extends ImageSpan {
+        // 自己真实绘制的
+        private Drawable mDrawable;
+        private View mView;
+        private int mSize;
+
+        /**
+         * 构造
+         *
+         * @param context 上下文
+         * @param view    目标View，用于加载完成时刷新使用
+         * @param source  加载目标
+         * @param size    图片的显示大小
+         */
+        public FaceSpan(Context context, View view, Object source, final int size) {
+            // 虽然设置了默认的表情，但是并不显示，只是用于占位
+            super(context, R.drawable.default_portrait, ALIGN_BOTTOM);
+            this.mView = view;
+            this.mSize = size;
+
+            Glide.with(context)
+                    .load(source)
+                    .fitCenter()
+                    .into(new SimpleTarget<GlideDrawable>(size, size) {
+
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                            mDrawable = resource.getCurrent();
+                            // 获取自测量高宽
+                            int width = mDrawable.getIntrinsicWidth();
+                            int height = mDrawable.getIntrinsicHeight();
+                            // 设置进去
+                            mDrawable.setBounds(0, 0, width > 0 ? width : size,
+                                    height > 0 ? height : size);
+
+                            // 通知刷新
+                            mView.invalidate();
+                        }
+                    });
+        }
+
+        @Override
+        public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+            // 走我们自己的逻辑，进行测量
+            Rect rect = mDrawable != null ? mDrawable.getBounds() :
+                    new Rect(0, 0, mSize, mSize);
+
+            if (fm != null) {
+                fm.ascent = -rect.bottom;
+                fm.descent = 0;
+
+                fm.top = fm.ascent;
+                fm.bottom = 0;
+            }
+
+            return rect.right;
+        }
+
+        @Override
+        public Drawable getDrawable() {
+            // 复写拿Drawable的方法，当然这里有可能返回的是null
+            return mDrawable;
+        }
+
+        @Override
+        public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
+            // 增加判断
+            if (mDrawable != null)
+                super.draw(canvas, text, start, end, x, top, y, bottom, paint);
+        }
+    }
+
 
 
     /**

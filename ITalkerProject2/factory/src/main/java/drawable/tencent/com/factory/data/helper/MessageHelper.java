@@ -39,11 +39,14 @@ public class MessageHelper {
                 if(local != null && local.getStatus()!=Message.STATUS_FAILED){
                     return ;
                 }
-                //如果是一个文件语音啥的就先上传在发送
+
 
                 //当我们发送的时候通知界面刷新我们的card
                 final MessageCard messageCard = model.buildCard();
                 Factory.getMessageCenter().dispatch(messageCard);
+
+                //如果是一个文件语音啥的就先上传在发送,然后图片的话这个messageCard里面的路径是本地的
+                //所以我们需要把它转化为云服务器上然后这个messageCard和model里面的路径都要换一下
 
                 //直接发送
                 RemoteService service = Network.getRetrofit().create(RemoteService.class);

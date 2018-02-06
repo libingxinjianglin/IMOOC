@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.structure.Model;
 
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.widget.airpanel.AirPanel;
@@ -31,6 +34,7 @@ import drawable.tencent.com.factory.model.db.User;
 import drawable.tencent.com.factory.persistence.Account;
 import drawable.tencent.com.factory.presenter.message.ChatControl;
 import italker.tencent.com.common.app.Fragment;
+import italker.tencent.com.common.face.Face;
 import italker.tencent.com.common.weiget.PortraitView;
 import italker.tencent.com.common.weiget.recycler.RecyclerAdapter;
 import italker.tencent.com.italkerproject.R;
@@ -132,6 +136,8 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
             public void onClick(View view) {
                 if(mSubmit.isActivated()){
                     mPresenter.pushText(mContent.getText().toString());
+                    mContent.setText("");
+
                 }
             }
         });
@@ -147,6 +153,7 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
         super.initData();
         mPresenter.statr();
     }
+
 
     private void initAppbar() {
         mAppBarLayout.addOnOffsetChangedListener(this);
@@ -281,9 +288,10 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
-
+            Spannable mSpan = new SpannableString(message.getContent());
+            Face.decode(mContent,mSpan, (int) Ui.dipToPx(getResources(),20));
             // 把内容设置到布局上
-            mContent.setText(message.getContent());
+            mContent.setText(mSpan);
 
         }
     }
@@ -316,6 +324,9 @@ public abstract class ChatFragment<Model> extends PresenterFragment<ChatControl.
     @Override
     public void onAdapterChanage() {
         //我们没有占位布局所以我们不做任何的处理
+        if(adapter.getItemCount() > 0){
+            mRecyclerView.smoothScrollToPosition(adapter.getItemCount());
+        }
     }
 
     @Override
